@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 analyze_repo.py . --output /tmp/test_graph.json)",
+      "Bash(python3 -c \"import json; d=json.load\\(open\\(''/tmp/test_graph.json''\\)\\); print\\(''meta:'', d[''meta'']\\); print\\(''nodes:'', len\\(d[''nodes'']\\)\\); print\\(''links:'', len\\(d[''links'']\\)\\)\")",
+      "Bash(python3 -c \"import json; d=json.load\\(open\\(''/tmp/test_graph.json''\\)\\); print\\(''meta:'', d[''meta'']\\); print\\(''nodes:'', len\\(d[''nodes'']\\)\\); print\\(''links:'', len\\(d[''links'']\\)\\); print\\(''sample nodes:'', [n[''id''] for n in d[''nodes''][:5]]\\)\")",
+      "Bash(python3:*)"
+    ]
+  }
+}
