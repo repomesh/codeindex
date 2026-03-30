@@ -86,6 +86,8 @@ def start_watcher(repo_path: str):
         print("watchdog not installed — run: pip install watchdog", file=sys.stderr)
         return
 
+    WATCHED_EXTS = {".py", ".js", ".ts", ".jsx", ".tsx", ".mjs", ".cjs"}
+
     class PyHandler(FileSystemEventHandler):
         def __init__(self):
             self._timer = None
@@ -95,11 +97,13 @@ def start_watcher(repo_path: str):
             run_analysis(repo_path, str(GRAPH_FILE))
 
         def on_modified(self, event):
-            if not event.is_directory and str(event.src_path).endswith(".py"):
-                if self._timer:
-                    self._timer.cancel()
-                self._timer = threading.Timer(1.0, self._debounced)
-                self._timer.start()
+            if not event.is_directory:
+                ext = str(event.src_path).rsplit(".", 1)
+                if len(ext) > 1 and f".{ext[-1]}" in WATCHED_EXTS:
+                    if self._timer:
+                        self._timer.cancel()
+                    self._timer = threading.Timer(1.0, self._debounced)
+                    self._timer.start()
 
     observer = Observer()
     observer.schedule(PyHandler(), repo_path, recursive=True)

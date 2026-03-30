@@ -27,6 +27,15 @@
     --node-function: #10b981;
     --node-import: #f59e0b;
     --node-config: #ef4444;
+
+    --node-js: #f7df1e;
+    --node-ts: #3b82f6;
+
+    --node-component: #ec4899;
+    --node-hook:      #10b981;
+    --node-route:     #f97316;
+    --node-store:     #8b5cf6;
+    --node-style:     #06b6d4;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -623,10 +632,18 @@
     <aside class="sidebar">
       <h3>Node Types</h3>
       <div class="legend-item"><div class="legend-dot" style="background:var(--node-module)"></div> Module / File</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--node-class)"></div> Class</div>
-      <div class="legend-item"><div class="legend-dot" style="background:var(--node-function)"></div> Function</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--node-component)"></div> Component</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--node-hook)"></div> Hook</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--node-route)"></div> Route</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--node-store)"></div> Store / Context</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--node-style)"></div> Stylesheet</div>
       <div class="legend-item"><div class="legend-dot" style="background:var(--node-import)"></div> External Import</div>
       <div class="legend-item"><div class="legend-dot" style="background:var(--node-config)"></div> Config / Data</div>
+
+      <h3 style="margin-top:16px">Languages</h3>
+      <div id="lang-legend" style="margin-bottom:12px">
+        <div style="font-size:10px;color:var(--muted)">—</div>
+      </div>
 
       <div class="stats-grid">
         <div class="stat-card"><div class="num" id="stat-files">—</div><div class="lbl">Files</div></div>
@@ -783,6 +800,36 @@ let LINKS = SAMPLE_LINKS;
 let META = { root: "sample_app/", total_files: 6, total_loc: 1490 };
 let graphLoaded = false;
 
+// Language colors (used for "module" type nodes and the language legend)
+const LANG_COLOR_HEX = {
+  python:     "#00d4ff",
+  javascript: "#f7df1e",
+  typescript: "#3b82f6",
+  vue:        "#42b883",
+  css:        "#e96900",
+  scss:       "#cc6699",
+  less:       "#1d365d",
+};
+
+// Active language filter — populated after data load
+let LANG_FILTER = new Set(["python", "javascript", "typescript", "vue", "css", "scss", "less"]);
+
+function nodeColor(d) {
+  // Fixed semantic types always use their type color
+  const typeColors = {
+    config:    "#ef4444",
+    import:    "#f59e0b",
+    component: "#ec4899",
+    hook:      "#10b981",
+    route:     "#f97316",
+    store:     "#8b5cf6",
+    style:     "#06b6d4",
+  };
+  if (typeColors[d.type]) return typeColors[d.type];
+  // "module" nodes use language color
+  return LANG_COLOR_HEX[d.language] || "#00d4ff";
+}
+
 const TYPE_COLOR = {
   module:   "var(--node-module)",
   class:    "var(--node-class)",
@@ -792,23 +839,83 @@ const TYPE_COLOR = {
 };
 
 const TYPE_COLOR_HEX = {
-  module:   "#00d4ff",
-  class:    "#7c3aed",
-  function: "#10b981",
-  import:   "#f59e0b",
-  config:   "#ef4444",
+  module:    "#00d4ff",
+  component: "#ec4899",
+  hook:      "#10b981",
+  route:     "#f97316",
+  store:     "#8b5cf6",
+  style:     "#06b6d4",
+  class:     "#7c3aed",
+  function:  "#10b981",
+  import:    "#f59e0b",
+  config:    "#ef4444",
 };
 
 // ─── DATA LOADING ────────────────────────────────────────────────────────────
 function updateStats() {
-  const modules = NODES.filter(n => n.type === 'module' || n.type === 'config').length;
+  const modules = NODES.filter(n => n.type !== 'import').length;
   document.getElementById('stat-files').textContent = META.total_files ?? modules;
   document.getElementById('stat-edges').textContent = LINKS.length;
   document.getElementById('stat-nodes').textContent = NODES.length;
   const loc = META.total_loc ?? NODES.reduce((s, n) => s + (n.loc || 0), 0);
   document.getElementById('stat-loc').textContent = loc >= 1000 ? (loc/1000).toFixed(1)+'k' : loc;
+
+  const detectedLangs = META.languages && META.languages.length
+    ? META.languages.map(l => l.charAt(0).toUpperCase() + l.slice(1)).join(' + ')
+    : 'Unknown';
+  const frameworkLabel = META.framework ? ` · ${META.framework}` : '';
   document.getElementById('header-meta').textContent =
-    `${META.root} | Python | ${modules} modules · ${NODES.length} nodes · ${LINKS.length} edges`;
+    `${META.root} | ${detectedLangs}${frameworkLabel} | ${modules} modules · ${NODES.length} nodes · ${LINKS.length} edges`;
+
+  updateLangLegend();
+}
+
+function updateLangLegend() {
+  const langs = [...new Set(NODES.map(n => n.language).filter(Boolean))];
+  const container = document.getElementById('lang-legend');
+  if (!langs.length) {
+    container.innerHTML = '<div style="font-size:10px;color:var(--muted)">—</div>';
+    return;
+  }
+  // Sync filter to langs present (add any new ones as active)
+  langs.forEach(l => { if (!LANG_FILTER.has(l) && LANG_FILTER.size === 0) LANG_FILTER.add(l); });
+
+  const LANG_LABELS = { python: 'Python', javascript: 'JavaScript', typescript: 'TypeScript', vue: 'Vue', css: 'CSS', scss: 'SCSS', less: 'Less' };
+  container.innerHTML = langs.map(lang => {
+    const active = LANG_FILTER.has(lang);
+    const color = LANG_COLOR_HEX[lang] || '#888';
+    const label = LANG_LABELS[lang] || lang;
+    return `<div class="legend-item lang-toggle" data-lang="${lang}"
+      style="cursor:pointer;opacity:${active ? 1 : 0.4};transition:opacity .2s"
+      onclick="toggleLang('${lang}')">
+      <div class="legend-dot" style="background:${color}"></div>${label}
+    </div>`;
+  }).join('');
+}
+
+function toggleLang(lang) {
+  if (LANG_FILTER.has(lang)) {
+    // Don't allow hiding all languages
+    if (LANG_FILTER.size > 1) LANG_FILTER.delete(lang);
+  } else {
+    LANG_FILTER.add(lang);
+  }
+  updateLangLegend();
+  applyLangFilter();
+}
+
+function applyLangFilter() {
+  d3.selectAll('#graph-svg g g').style('display', d => {
+    if (!d || !d.language) return null;
+    return LANG_FILTER.has(d.language) ? null : 'none';
+  });
+  d3.selectAll('#graph-svg .link-line').style('display', function(l) {
+    const sn = NODES.find(n => n.id === nodeId(l.source));
+    const tn = NODES.find(n => n.id === nodeId(l.target));
+    if (sn && sn.language && !LANG_FILTER.has(sn.language)) return 'none';
+    if (tn && tn.language && !LANG_FILTER.has(tn.language)) return 'none';
+    return null;
+  });
 }
 
 async function loadGraph() {
@@ -880,9 +987,12 @@ function getConnections(node) {
 function showTooltip(evt, node) {
   tooltip.style.display = 'block';
   const conns = getConnections(node);
+  const langBadge = node.language
+    ? `<span style="color:${LANG_COLOR_HEX[node.language]||'#888'};margin-left:4px">${node.language}</span>`
+    : '';
   tooltip.innerHTML = `
     <strong>${node.id}</strong>
-    <div class="t-type">${node.type}</div>
+    <div class="t-type">${node.type}${langBadge}</div>
     <div>Connections: <b>${conns.length}</b></div>
     ${node.loc ? `<div>LOC: <b>${node.loc}</b></div>` : ''}
     ${node.imports ? `<div>Imports: <b>${node.imports}</b></div>` : ''}
@@ -903,7 +1013,7 @@ function showNodeDetail(node) {
   panel.innerHTML = `
     <div class="node-detail">
       <div class="nd-title">${n.id}</div>
-      <div class="nd-meta">${n.type}${n.loc ? ' · ' + n.loc + ' LOC' : ''}${n.group !== undefined ? ' · group ' + n.group : ''}</div>
+      <div class="nd-meta">${n.type}${n.language ? ' · ' + n.language : ''}${n.framework ? ' · ' + n.framework : ''}${n.loc ? ' · ' + n.loc + ' LOC' : ''}${n.group !== undefined ? ' · group ' + n.group : ''}</div>
       ${outgoing.length ? `<div class="nd-section">Imports (${outgoing.length})</div>
         <div class="nd-list">${outgoing.map(x => `<div class="nd-item">${x}</div>`).join('')}</div>` : ''}
       ${incoming.length ? `<div class="nd-section">Imported by (${incoming.length})</div>
@@ -1032,11 +1142,14 @@ function initForceGraph() {
   };
 
   const linkEl = g.append('g').selectAll('line').data(links).enter().append('line')
+    .attr('class', 'link-line')
     .attr('stroke-opacity', 0.4)
     .attr('stroke-width', d => (d.weight||1) * 0.8)
     .attr('stroke', d => {
       const s = nodeId(d.source), t = nodeId(d.target);
       if (cycleEdges.has(`${s}→${t}`)) return '#ef4444';
+      if (d.kind === 'renders') return '#ec4899';
+      if (d.kind === 'styles')  return '#06b6d4';
       return internalIds.has(t) ? '#00d4ff' : '#f59e0b';
     })
     .attr('marker-end', d => {
@@ -1072,13 +1185,13 @@ function initForceGraph() {
 
   nodeEl.append('circle')
     .attr('r', d => Math.sqrt(d.size||40) * 0.85 + 5)
-    .attr('fill', d => TYPE_COLOR_HEX[d.type] + '22')
-    .attr('stroke', d => TYPE_COLOR_HEX[d.type])
+    .attr('fill', d => nodeColor(d) + '22')
+    .attr('stroke', d => nodeColor(d))
     .attr('stroke-width', 1.5)
     .attr('filter', 'url(#glow)')
     .attr('class', 'node-outer');
 
-  nodeEl.append('circle').attr('r', 4).attr('fill', d => TYPE_COLOR_HEX[d.type]);
+  nodeEl.append('circle').attr('r', 4).attr('fill', d => nodeColor(d));
 
   nodeEl.append('text')
     .text(d => d.id.split('/').pop())
@@ -1309,7 +1422,8 @@ function initThree() {
 let matrixInit = false;
 
 function buildMatrix(sortBy = 'name') {
-  let modules = NODES.filter(n => n.type === 'module' || n.type === 'config');
+  const INTERNAL_TYPES = new Set(['module','component','hook','route','store','style','config','class','function']);
+  let modules = NODES.filter(n => INTERNAL_TYPES.has(n.type));
   const connCount = id => LINKS.filter(l => nodeId(l.source) === id || nodeId(l.target) === id).length;
 
   if (sortBy === 'name') modules.sort((a, b) => a.id.localeCompare(b.id));

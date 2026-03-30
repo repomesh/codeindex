@@ -1,5402 +1,1473 @@
 {
   "meta": {
-    "root": "orchid/",
-    "total_files": 102,
-    "total_loc": 24792
+    "root": "cozychairbooks/",
+    "total_files": 57,
+    "total_loc": 3925,
+    "languages": [
+      "python",
+      "javascript",
+      "css"
+    ]
   },
   "nodes": [
     {
-      "id": "orchid/__init__.py",
-      "type": "module",
-      "size": 4,
-      "loc": 4,
+      "id": "backend/alembic/env.py",
+      "type": "config",
+      "language": "python",
+      "size": 86,
+      "loc": 86,
       "group": 0,
-      "imports": 0
+      "imports": 7
     },
     {
-      "id": "orchid/agent_manager.py",
+      "id": "backend/alembic/versions/001_initial_schema.py",
       "type": "module",
-      "size": 221,
-      "loc": 221,
-      "group": 0,
-      "imports": 9
-    },
-    {
-      "id": "orchid/agents/__init__.py",
-      "type": "module",
-      "size": 2,
-      "loc": 2,
-      "group": 1,
-      "imports": 0
-    },
-    {
-      "id": "orchid/agents/base.py",
-      "type": "module",
-      "size": 642,
-      "loc": 642,
-      "group": 1,
-      "imports": 16
-    },
-    {
-      "id": "orchid/agents/delegator.py",
-      "type": "module",
-      "size": 177,
-      "loc": 177,
-      "group": 1,
-      "imports": 11
-    },
-    {
-      "id": "orchid/agents/developer.py",
-      "type": "module",
-      "size": 38,
-      "loc": 38,
-      "group": 1,
-      "imports": 2
-    },
-    {
-      "id": "orchid/agents/discussion_agent.py",
-      "type": "module",
-      "size": 192,
-      "loc": 192,
-      "group": 1,
-      "imports": 9
-    },
-    {
-      "id": "orchid/agents/pm_agent.py",
-      "type": "module",
-      "size": 156,
-      "loc": 156,
-      "group": 1,
-      "imports": 6
-    },
-    {
-      "id": "orchid/agents/product_manager.py",
-      "type": "module",
-      "size": 201,
-      "loc": 201,
-      "group": 1,
-      "imports": 9
-    },
-    {
-      "id": "orchid/agents/project_manager.py",
-      "type": "module",
-      "size": 522,
-      "loc": 522,
-      "group": 1,
-      "imports": 9
-    },
-    {
-      "id": "orchid/agents/researcher.py",
-      "type": "module",
-      "size": 58,
-      "loc": 58,
+      "language": "python",
+      "size": 131,
+      "loc": 131,
       "group": 1,
       "imports": 3
     },
     {
-      "id": "orchid/agents/reviewer.py",
+      "id": "backend/app/__init__.py",
       "type": "module",
+      "language": "python",
+      "size": 2,
+      "loc": 2,
+      "group": 2,
+      "imports": 0
+    },
+    {
+      "id": "backend/app/config.py",
+      "type": "config",
+      "language": "python",
+      "size": 37,
+      "loc": 37,
+      "group": 2,
+      "imports": 1
+    },
+    {
+      "id": "backend/app/database.py",
+      "type": "module",
+      "language": "python",
+      "size": 32,
+      "loc": 32,
+      "group": 2,
+      "imports": 4
+    },
+    {
+      "id": "backend/app/dependencies.py",
+      "type": "module",
+      "language": "python",
+      "size": 73,
+      "loc": 73,
+      "group": 2,
+      "imports": 8
+    },
+    {
+      "id": "backend/app/main.py",
+      "type": "module",
+      "language": "python",
+      "size": 50,
+      "loc": 50,
+      "group": 2,
+      "imports": 4
+    },
+    {
+      "id": "backend/app/middleware/__init__.py",
+      "type": "module",
+      "language": "python",
+      "size": 2,
+      "loc": 2,
+      "group": 3,
+      "imports": 0
+    },
+    {
+      "id": "backend/app/models/__init__.py",
+      "type": "module",
+      "language": "python",
+      "size": 17,
+      "loc": 17,
+      "group": 4,
+      "imports": 5
+    },
+    {
+      "id": "backend/app/models/book.py",
+      "type": "module",
+      "language": "python",
       "size": 31,
       "loc": 31,
-      "group": 1,
-      "imports": 2
-    },
-    {
-      "id": "orchid/agents/tester.py",
-      "type": "module",
-      "size": 51,
-      "loc": 51,
-      "group": 1,
-      "imports": 3
-    },
-    {
-      "id": "orchid/config.py",
-      "type": "config",
-      "size": 117,
-      "loc": 117,
-      "group": 0,
-      "imports": 8
-    },
-    {
-      "id": "orchid/discovery.py",
-      "type": "module",
-      "size": 291,
-      "loc": 291,
-      "group": 0,
-      "imports": 7
-    },
-    {
-      "id": "orchid/discussion.py",
-      "type": "module",
-      "size": 116,
-      "loc": 116,
-      "group": 0,
-      "imports": 5
-    },
-    {
-      "id": "orchid/errors.py",
-      "type": "module",
-      "size": 16,
-      "loc": 16,
-      "group": 0,
-      "imports": 1
-    },
-    {
-      "id": "orchid/gates.py",
-      "type": "module",
-      "size": 113,
-      "loc": 113,
-      "group": 0,
-      "imports": 6
-    },
-    {
-      "id": "orchid/interfaces/__init__.py",
-      "type": "module",
-      "size": 2,
-      "loc": 2,
-      "group": 2,
-      "imports": 0
-    },
-    {
-      "id": "orchid/interfaces/background_runner.py",
-      "type": "module",
-      "size": 264,
-      "loc": 264,
-      "group": 2,
-      "imports": 13
-    },
-    {
-      "id": "orchid/interfaces/central_bot.py",
-      "type": "module",
-      "size": 201,
-      "loc": 201,
-      "group": 2,
-      "imports": 9
-    },
-    {
-      "id": "orchid/interfaces/cli.py",
-      "type": "module",
-      "size": 1639,
-      "loc": 1639,
-      "group": 2,
-      "imports": 66
-    },
-    {
-      "id": "orchid/interfaces/multi_formatter.py",
-      "type": "module",
-      "size": 89,
-      "loc": 89,
-      "group": 2,
-      "imports": 3
-    },
-    {
-      "id": "orchid/interfaces/slack_bot.py",
-      "type": "module",
-      "size": 567,
-      "loc": 567,
-      "group": 2,
-      "imports": 43
-    },
-    {
-      "id": "orchid/interfaces/slack_central.py",
-      "type": "module",
-      "size": 807,
-      "loc": 807,
-      "group": 2,
-      "imports": 44
-    },
-    {
-      "id": "orchid/interfaces/slack_formatter.py",
-      "type": "module",
-      "size": 290,
-      "loc": 290,
-      "group": 2,
-      "imports": 4
-    },
-    {
-      "id": "orchid/interfaces/telegram_bot.py",
-      "type": "module",
-      "size": 453,
-      "loc": 453,
-      "group": 2,
-      "imports": 31
-    },
-    {
-      "id": "orchid/interfaces/telegram_central.py",
-      "type": "module",
-      "size": 740,
-      "loc": 740,
-      "group": 2,
-      "imports": 42
-    },
-    {
-      "id": "orchid/interfaces/telegram_formatter.py",
-      "type": "module",
-      "size": 241,
-      "loc": 241,
-      "group": 2,
-      "imports": 2
-    },
-    {
-      "id": "orchid/interfaces/web_server.py",
-      "type": "module",
-      "size": 1447,
-      "loc": 1447,
-      "group": 2,
-      "imports": 60
-    },
-    {
-      "id": "orchid/lifecycle.py",
-      "type": "module",
-      "size": 162,
-      "loc": 162,
-      "group": 0,
-      "imports": 6
-    },
-    {
-      "id": "orchid/machine_profile.py",
-      "type": "module",
-      "size": 195,
-      "loc": 195,
-      "group": 0,
-      "imports": 5
-    },
-    {
-      "id": "orchid/memory/__init__.py",
-      "type": "module",
-      "size": 2,
-      "loc": 2,
-      "group": 3,
-      "imports": 0
-    },
-    {
-      "id": "orchid/memory/decisions.py",
-      "type": "module",
-      "size": 82,
-      "loc": 82,
-      "group": 3,
-      "imports": 7
-    },
-    {
-      "id": "orchid/memory/state.py",
-      "type": "module",
-      "size": 294,
-      "loc": 294,
-      "group": 3,
-      "imports": 10
-    },
-    {
-      "id": "orchid/memory/vector.py",
-      "type": "module",
-      "size": 284,
-      "loc": 284,
-      "group": 3,
-      "imports": 9
-    },
-    {
-      "id": "orchid/multi.py",
-      "type": "module",
-      "size": 330,
-      "loc": 330,
-      "group": 0,
-      "imports": 17
-    },
-    {
-      "id": "orchid/orchestrator.py",
-      "type": "module",
-      "size": 684,
-      "loc": 684,
-      "group": 0,
-      "imports": 30
-    },
-    {
-      "id": "orchid/planning.py",
-      "type": "module",
-      "size": 140,
-      "loc": 140,
-      "group": 0,
-      "imports": 6
-    },
-    {
-      "id": "orchid/project_creator.py",
-      "type": "module",
-      "size": 112,
-      "loc": 112,
-      "group": 0,
-      "imports": 6
-    },
-    {
-      "id": "orchid/providers/__init__.py",
-      "type": "module",
-      "size": 13,
-      "loc": 13,
-      "group": 4,
-      "imports": 2
-    },
-    {
-      "id": "orchid/providers/anthropic.py",
-      "type": "module",
-      "size": 253,
-      "loc": 253,
-      "group": 4,
-      "imports": 10
-    },
-    {
-      "id": "orchid/providers/base.py",
-      "type": "module",
-      "size": 130,
-      "loc": 130,
       "group": 4,
       "imports": 4
     },
     {
-      "id": "orchid/providers/bedrock.py",
+      "id": "backend/app/models/friendship.py",
       "type": "module",
-      "size": 119,
-      "loc": 119,
+      "language": "python",
+      "size": 39,
+      "loc": 39,
       "group": 4,
-      "imports": 6
-    },
-    {
-      "id": "orchid/providers/local.py",
-      "type": "module",
-      "size": 247,
-      "loc": 247,
-      "group": 4,
-      "imports": 12
-    },
-    {
-      "id": "orchid/providers/ollama.py",
-      "type": "module",
-      "size": 97,
-      "loc": 97,
-      "group": 4,
-      "imports": 9
-    },
-    {
-      "id": "orchid/providers/openai.py",
-      "type": "module",
-      "size": 103,
-      "loc": 103,
-      "group": 4,
-      "imports": 7
-    },
-    {
-      "id": "orchid/providers/registry.py",
-      "type": "module",
-      "size": 330,
-      "loc": 330,
-      "group": 4,
-      "imports": 16
-    },
-    {
-      "id": "orchid/runner.py",
-      "type": "module",
-      "size": 98,
-      "loc": 98,
-      "group": 0,
-      "imports": 9
-    },
-    {
-      "id": "orchid/session.py",
-      "type": "module",
-      "size": 385,
-      "loc": 385,
-      "group": 0,
-      "imports": 14
-    },
-    {
-      "id": "orchid/tools/__init__.py",
-      "type": "module",
-      "size": 2,
-      "loc": 2,
-      "group": 5,
-      "imports": 0
-    },
-    {
-      "id": "orchid/tools/auto_review.py",
-      "type": "module",
-      "size": 128,
-      "loc": 128,
-      "group": 5,
-      "imports": 6
-    },
-    {
-      "id": "orchid/tools/consistency.py",
-      "type": "module",
-      "size": 149,
-      "loc": 149,
-      "group": 5,
       "imports": 4
     },
     {
-      "id": "orchid/tools/filesystem.py",
+      "id": "backend/app/models/privacy_setting.py",
       "type": "module",
-      "size": 78,
-      "loc": 78,
-      "group": 5,
-      "imports": 3
+      "language": "python",
+      "size": 38,
+      "loc": 38,
+      "group": 4,
+      "imports": 4
     },
     {
-      "id": "orchid/tools/models.py",
+      "id": "backend/app/models/user.py",
       "type": "module",
-      "size": 221,
-      "loc": 221,
-      "group": 5,
-      "imports": 9
-    },
-    {
-      "id": "orchid/tools/project_context.py",
-      "type": "module",
-      "size": 547,
-      "loc": 547,
-      "group": 5,
-      "imports": 10
-    },
-    {
-      "id": "orchid/tools/retry.py",
-      "type": "module",
-      "size": 159,
-      "loc": 159,
-      "group": 5,
-      "imports": 5
-    },
-    {
-      "id": "orchid/tools/search.py",
-      "type": "module",
-      "size": 353,
-      "loc": 353,
-      "group": 5,
-      "imports": 15
-    },
-    {
-      "id": "orchid/tools/session_log_parser.py",
-      "type": "module",
+      "language": "python",
       "size": 41,
       "loc": 41,
-      "group": 5,
+      "group": 4,
       "imports": 4
     },
     {
-      "id": "orchid/tools/shell.py",
+      "id": "backend/app/models/user_book.py",
       "type": "module",
-      "size": 164,
-      "loc": 164,
-      "group": 5,
-      "imports": 7
-    },
-    {
-      "id": "orchid/web/server.py",
-      "type": "module",
-      "size": 167,
-      "loc": 167,
-      "group": 6,
-      "imports": 9
-    },
-    {
-      "id": "src/__init__.py",
-      "type": "module",
-      "size": 9,
-      "loc": 9,
-      "group": 7,
-      "imports": 1
-    },
-    {
-      "id": "src/main.py",
-      "type": "module",
-      "size": 20,
-      "loc": 20,
-      "group": 7,
-      "imports": 1
-    },
-    {
-      "id": "src/utils.py",
-      "type": "module",
-      "size": 24,
-      "loc": 24,
-      "group": 7,
-      "imports": 0
-    },
-    {
-      "id": "tests/__init__.py",
-      "type": "module",
-      "size": 4,
-      "loc": 4,
-      "group": 8,
-      "imports": 0
-    },
-    {
-      "id": "tests/test_caching.py",
-      "type": "module",
-      "size": 436,
-      "loc": 436,
-      "group": 8,
-      "imports": 34
-    },
-    {
-      "id": "tests/test_central_bots.py",
-      "type": "module",
-      "size": 907,
-      "loc": 907,
-      "group": 8,
-      "imports": 51
-    },
-    {
-      "id": "tests/test_cli_decide.py",
-      "type": "module",
-      "size": 74,
-      "loc": 74,
-      "group": 8,
+      "language": "python",
+      "size": 45,
+      "loc": 45,
+      "group": 4,
       "imports": 5
     },
     {
-      "id": "tests/test_config.py",
+      "id": "backend/app/routers/__init__.py",
       "type": "module",
-      "size": 60,
-      "loc": 60,
-      "group": 8,
-      "imports": 4
+      "language": "python",
+      "size": 2,
+      "loc": 2,
+      "group": 5,
+      "imports": 0
     },
     {
-      "id": "tests/test_decisions.py",
+      "id": "backend/app/routers/auth.py",
       "type": "module",
-      "size": 29,
-      "loc": 29,
-      "group": 8,
-      "imports": 2
-    },
-    {
-      "id": "tests/test_delegation.py",
-      "type": "module",
-      "size": 234,
-      "loc": 234,
-      "group": 8,
-      "imports": 17
-    },
-    {
-      "id": "tests/test_dependencies.py",
-      "type": "module",
-      "size": 119,
-      "loc": 119,
-      "group": 8,
-      "imports": 5
-    },
-    {
-      "id": "tests/test_discovery.py",
-      "type": "module",
-      "size": 320,
-      "loc": 320,
-      "group": 8,
-      "imports": 13
-    },
-    {
-      "id": "tests/test_discussion.py",
-      "type": "module",
-      "size": 146,
-      "loc": 146,
-      "group": 8,
-      "imports": 4
-    },
-    {
-      "id": "tests/test_gates.py",
-      "type": "module",
-      "size": 132,
-      "loc": 132,
-      "group": 8,
+      "language": "python",
+      "size": 117,
+      "loc": 117,
+      "group": 5,
       "imports": 7
     },
     {
-      "id": "tests/test_init.py",
+      "id": "backend/app/routers/books.py",
       "type": "module",
-      "size": 57,
-      "loc": 57,
-      "group": 8,
-      "imports": 4
-    },
-    {
-      "id": "tests/test_injection.py",
-      "type": "module",
-      "size": 122,
-      "loc": 122,
-      "group": 8,
-      "imports": 11
-    },
-    {
-      "id": "tests/test_integration.py",
-      "type": "module",
-      "size": 274,
-      "loc": 274,
-      "group": 8,
-      "imports": 18
-    },
-    {
-      "id": "tests/test_lifecycle.py",
-      "type": "module",
-      "size": 179,
-      "loc": 179,
-      "group": 8,
-      "imports": 4
-    },
-    {
-      "id": "tests/test_machine_profile.py",
-      "type": "module",
-      "size": 157,
-      "loc": 157,
-      "group": 8,
-      "imports": 4
-    },
-    {
-      "id": "tests/test_metrics.py",
-      "type": "module",
-      "size": 204,
-      "loc": 204,
-      "group": 8,
-      "imports": 14
-    },
-    {
-      "id": "tests/test_multi.py",
-      "type": "module",
-      "size": 540,
-      "loc": 540,
-      "group": 8,
-      "imports": 38
-    },
-    {
-      "id": "tests/test_notifications.py",
-      "type": "module",
-      "size": 126,
-      "loc": 126,
-      "group": 8,
-      "imports": 9
-    },
-    {
-      "id": "tests/test_pm_dashboard.py",
-      "type": "module",
-      "size": 189,
-      "loc": 189,
-      "group": 8,
-      "imports": 7
-    },
-    {
-      "id": "tests/test_project_creator.py",
-      "type": "module",
-      "size": 167,
-      "loc": 167,
-      "group": 8,
-      "imports": 9
-    },
-    {
-      "id": "tests/test_project_manager.py",
-      "type": "module",
-      "size": 289,
-      "loc": 289,
-      "group": 8,
-      "imports": 6
-    },
-    {
-      "id": "tests/test_providers.py",
-      "type": "module",
-      "size": 823,
-      "loc": 823,
-      "group": 8,
-      "imports": 44
-    },
-    {
-      "id": "tests/test_rollup.py",
-      "type": "module",
-      "size": 415,
-      "loc": 415,
-      "group": 8,
-      "imports": 16
-    },
-    {
-      "id": "tests/test_routing.py",
-      "type": "module",
-      "size": 154,
-      "loc": 154,
-      "group": 8,
-      "imports": 6
-    },
-    {
-      "id": "tests/test_search.py",
-      "type": "module",
-      "size": 291,
-      "loc": 291,
-      "group": 8,
-      "imports": 29
-    },
-    {
-      "id": "tests/test_searxng_live.py",
-      "type": "module",
+      "language": "python",
       "size": 78,
       "loc": 78,
-      "group": 8,
+      "group": 5,
       "imports": 5
     },
     {
-      "id": "tests/test_slack.py",
+      "id": "backend/app/routers/social.py",
       "type": "module",
-      "size": 367,
-      "loc": 367,
-      "group": 8,
-      "imports": 26
-    },
-    {
-      "id": "tests/test_state.py",
-      "type": "module",
-      "size": 83,
-      "loc": 83,
-      "group": 8,
-      "imports": 5
-    },
-    {
-      "id": "tests/test_streaming.py",
-      "type": "module",
-      "size": 177,
-      "loc": 177,
-      "group": 8,
+      "language": "python",
+      "size": 152,
+      "loc": 152,
+      "group": 5,
       "imports": 8
     },
     {
-      "id": "tests/test_telegram.py",
+      "id": "backend/app/routers/user_books.py",
       "type": "module",
-      "size": 284,
-      "loc": 284,
-      "group": 8,
-      "imports": 18
+      "language": "python",
+      "size": 204,
+      "loc": 204,
+      "group": 5,
+      "imports": 6
     },
     {
-      "id": "tests/test_tester_agent.py",
+      "id": "backend/app/schemas/__init__.py",
       "type": "module",
-      "size": 221,
-      "loc": 221,
-      "group": 8,
-      "imports": 15
+      "language": "python",
+      "size": 2,
+      "loc": 2,
+      "group": 6,
+      "imports": 0
     },
     {
-      "id": "tests/test_tools.py",
+      "id": "backend/app/schemas/auth.py",
       "type": "module",
-      "size": 61,
-      "loc": 61,
-      "group": 8,
-      "imports": 5
-    },
-    {
-      "id": "tests/test_trace.py",
-      "type": "module",
-      "size": 202,
-      "loc": 202,
-      "group": 8,
-      "imports": 11
-    },
-    {
-      "id": "tests/test_utils.py",
-      "type": "module",
-      "size": 74,
-      "loc": 74,
-      "group": 8,
+      "language": "python",
+      "size": 25,
+      "loc": 25,
+      "group": 6,
       "imports": 2
     },
     {
-      "id": "tests/test_vector_memory.py",
+      "id": "backend/app/schemas/book.py",
       "type": "module",
-      "size": 198,
-      "loc": 198,
-      "group": 8,
-      "imports": 13
+      "language": "python",
+      "size": 53,
+      "loc": 53,
+      "group": 6,
+      "imports": 2
     },
     {
-      "id": "tests/test_web.py",
+      "id": "backend/app/schemas/privacy.py",
       "type": "module",
-      "size": 453,
-      "loc": 453,
-      "group": 8,
-      "imports": 25
+      "language": "python",
+      "size": 30,
+      "loc": 30,
+      "group": 6,
+      "imports": 2
     },
     {
-      "id": "tests/test_web_v2.py",
+      "id": "backend/app/schemas/user.py",
       "type": "module",
-      "size": 336,
-      "loc": 336,
-      "group": 8,
-      "imports": 10
+      "language": "python",
+      "size": 35,
+      "loc": 35,
+      "group": 6,
+      "imports": 2
     },
     {
-      "id": "__future__",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 101,
+      "id": "backend/app/schemas/user_book.py",
+      "type": "module",
+      "language": "python",
+      "size": 64,
+      "loc": 64,
+      "group": 6,
+      "imports": 4
+    },
+    {
+      "id": "backend/app/services/__init__.py",
+      "type": "module",
+      "language": "python",
+      "size": 2,
+      "loc": 2,
+      "group": 7,
       "imports": 0
+    },
+    {
+      "id": "backend/app/services/auth_service.py",
+      "type": "module",
+      "language": "python",
+      "size": 82,
+      "loc": 82,
+      "group": 7,
+      "imports": 4
+    },
+    {
+      "id": "backend/app/services/book_service.py",
+      "type": "module",
+      "language": "python",
+      "size": 58,
+      "loc": 58,
+      "group": 7,
+      "imports": 3
+    },
+    {
+      "id": "backend/app/services/google_books.py",
+      "type": "module",
+      "language": "python",
+      "size": 86,
+      "loc": 86,
+      "group": 7,
+      "imports": 4
+    },
+    {
+      "id": "backend/app/services/privacy_service.py",
+      "type": "module",
+      "language": "python",
+      "size": 135,
+      "loc": 135,
+      "group": 7,
+      "imports": 5
+    },
+    {
+      "id": "backend/app/services/user_book_service.py",
+      "type": "module",
+      "language": "python",
+      "size": 242,
+      "loc": 242,
+      "group": 7,
+      "imports": 5
+    },
+    {
+      "id": "isbn_info_from_barcode.py",
+      "type": "module",
+      "language": "python",
+      "size": 73,
+      "loc": 73,
+      "group": 8,
+      "imports": 5
     },
     {
       "id": "logging",
       "type": "import",
+      "language": "python",
       "size": 40,
       "loc": 0,
-      "group": 101,
+      "group": 9000,
       "imports": 0
     },
     {
-      "id": "threading",
+      "id": "sqlalchemy",
       "type": "import",
+      "language": "python",
       "size": 40,
       "loc": 0,
-      "group": 101,
+      "group": 9000,
       "imports": 0
     },
     {
-      "id": "dataclasses",
+      "id": "alembic",
       "type": "import",
+      "language": "python",
       "size": 40,
       "loc": 0,
-      "group": 101,
+      "group": 9000,
       "imports": 0
     },
     {
-      "id": "datetime",
+      "id": "app",
       "type": "import",
+      "language": "python",
       "size": 40,
       "loc": 0,
-      "group": 101,
+      "group": 9000,
       "imports": 0
     },
     {
       "id": "typing",
       "type": "import",
+      "language": "python",
       "size": 40,
       "loc": 0,
-      "group": 101,
+      "group": 9000,
       "imports": 0
     },
     {
-      "id": "apscheduler",
+      "id": "pydantic_settings",
       "type": "import",
+      "language": "python",
       "size": 40,
       "loc": 0,
-      "group": 101,
-      "imports": 0
-    },
-    {
-      "id": "json",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 102,
-      "imports": 0
-    },
-    {
-      "id": "re",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 102,
-      "imports": 0
-    },
-    {
-      "id": "collections",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 102,
-      "imports": 0
-    },
-    {
-      "id": "pathlib",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 102,
-      "imports": 0
-    },
-    {
-      "id": "concurrent",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 102,
-      "imports": 0
-    },
-    {
-      "id": "copy",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 102,
-      "imports": 0
-    },
-    {
-      "id": "os",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 102,
-      "imports": 0
-    },
-    {
-      "id": "yaml",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 102,
-      "imports": 0
-    },
-    {
-      "id": "dotenv",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 102,
-      "imports": 0
-    },
-    {
-      "id": "watchdog",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 102,
-      "imports": 0
-    },
-    {
-      "id": "enum",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 102,
-      "imports": 0
-    },
-    {
-      "id": "asyncio",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 103,
-      "imports": 0
-    },
-    {
-      "id": "importlib",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 103,
-      "imports": 0
-    },
-    {
-      "id": "typer",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 103,
-      "imports": 0
-    },
-    {
-      "id": "rich",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 103,
-      "imports": 0
-    },
-    {
-      "id": "time",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 103,
-      "imports": 0
-    },
-    {
-      "id": "slack_bolt",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 103,
-      "imports": 0
-    },
-    {
-      "id": "slack_sdk",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 103,
-      "imports": 0
-    },
-    {
-      "id": "tempfile",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 103,
-      "imports": 0
-    },
-    {
-      "id": "telegram",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 103,
-      "imports": 0
-    },
-    {
-      "id": "contextlib",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 103,
+      "group": 9000,
       "imports": 0
     },
     {
       "id": "fastapi",
       "type": "import",
+      "language": "python",
       "size": 40,
       "loc": 0,
-      "group": 103,
+      "group": 9000,
+      "imports": 0
+    },
+    {
+      "id": "jose",
+      "type": "import",
+      "language": "python",
+      "size": 40,
+      "loc": 0,
+      "group": 9000,
+      "imports": 0
+    },
+    {
+      "id": "datetime",
+      "type": "import",
+      "language": "python",
+      "size": 40,
+      "loc": 0,
+      "group": 9000,
+      "imports": 0
+    },
+    {
+      "id": "enum",
+      "type": "import",
+      "language": "python",
+      "size": 40,
+      "loc": 0,
+      "group": 9000,
       "imports": 0
     },
     {
       "id": "pydantic",
       "type": "import",
+      "language": "python",
       "size": 40,
       "loc": 0,
-      "group": 103,
+      "group": 9000,
       "imports": 0
     },
     {
-      "id": "uvicorn",
+      "id": "passlib",
       "type": "import",
+      "language": "python",
       "size": 40,
       "loc": 0,
-      "group": 103,
-      "imports": 0
-    },
-    {
-      "id": "warnings",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 104,
-      "imports": 0
-    },
-    {
-      "id": "tiktoken",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 104,
-      "imports": 0
-    },
-    {
-      "id": "chromadb",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 104,
-      "imports": 0
-    },
-    {
-      "id": "multiprocessing",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 104,
-      "imports": 0
-    },
-    {
-      "id": "signal",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 104,
-      "imports": 0
-    },
-    {
-      "id": "subprocess",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 104,
-      "imports": 0
-    },
-    {
-      "id": "tenacity",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 105,
-      "imports": 0
-    },
-    {
-      "id": "abc",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 105,
-      "imports": 0
-    },
-    {
-      "id": "boto3",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 105,
+      "group": 9000,
       "imports": 0
     },
     {
       "id": "httpx",
       "type": "import",
+      "language": "python",
       "size": 40,
       "loc": 0,
-      "group": 105,
-      "imports": 0
-    },
-    {
-      "id": "sentence_transformers",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 106,
-      "imports": 0
-    },
-    {
-      "id": "configparser",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 106,
-      "imports": 0
-    },
-    {
-      "id": "tomllib",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 106,
-      "imports": 0
-    },
-    {
-      "id": "tomli",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 106,
-      "imports": 0
-    },
-    {
-      "id": "trafilatura",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 106,
-      "imports": 0
-    },
-    {
-      "id": "bs4",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 106,
+      "group": 9000,
       "imports": 0
     },
     {
       "id": "urllib",
       "type": "import",
+      "language": "python",
       "size": 40,
       "loc": 0,
-      "group": 106,
+      "group": 9000,
       "imports": 0
     },
     {
-      "id": "shlex",
+      "id": "json",
       "type": "import",
+      "language": "python",
       "size": 40,
       "loc": 0,
-      "group": 106,
+      "group": 9000,
       "imports": 0
     },
     {
-      "id": "orchid",
+      "id": "textwrap",
       "type": "import",
+      "language": "python",
       "size": 40,
       "loc": 0,
-      "group": 107,
+      "group": 9000,
       "imports": 0
     },
     {
-      "id": "unittest",
+      "id": "cv2",
       "type": "import",
+      "language": "python",
       "size": 40,
       "loc": 0,
-      "group": 109,
+      "group": 9000,
       "imports": 0
     },
     {
-      "id": "pytest",
+      "id": "pyzbar",
       "type": "import",
+      "language": "python",
       "size": 40,
       "loc": 0,
-      "group": 109,
+      "group": 9000,
       "imports": 0
     },
     {
-      "id": "types",
-      "type": "import",
-      "size": 40,
-      "loc": 0,
-      "group": 109,
+      "id": "frontend/src/App.jsx",
+      "type": "component",
+      "language": "javascript",
+      "framework": null,
+      "size": 67,
+      "loc": 67,
+      "group": 9,
+      "imports": 9
+    },
+    {
+      "id": "frontend/src/components/auth/Login.jsx",
+      "type": "component",
+      "language": "javascript",
+      "framework": null,
+      "size": 88,
+      "loc": 88,
+      "group": 10,
+      "imports": 4
+    },
+    {
+      "id": "frontend/src/components/auth/Register.jsx",
+      "type": "component",
+      "language": "javascript",
+      "framework": null,
+      "size": 118,
+      "loc": 118,
+      "group": 10,
+      "imports": 4
+    },
+    {
+      "id": "frontend/src/components/books/BarcodeScanner.jsx",
+      "type": "component",
+      "language": "javascript",
+      "framework": null,
+      "size": 61,
+      "loc": 61,
+      "group": 11,
+      "imports": 3
+    },
+    {
+      "id": "frontend/src/components/common/Navbar.jsx",
+      "type": "component",
+      "language": "javascript",
+      "framework": null,
+      "size": 49,
+      "loc": 49,
+      "group": 12,
+      "imports": 3
+    },
+    {
+      "id": "frontend/src/components/library/BookCard.jsx",
+      "type": "component",
+      "language": "javascript",
+      "framework": null,
+      "size": 177,
+      "loc": 177,
+      "group": 13,
+      "imports": 3
+    },
+    {
+      "id": "frontend/src/context/AuthContext.jsx",
+      "type": "store",
+      "language": "javascript",
+      "framework": null,
+      "size": 58,
+      "loc": 58,
+      "group": 14,
+      "imports": 2
+    },
+    {
+      "id": "frontend/src/main.jsx",
+      "type": "component",
+      "language": "javascript",
+      "framework": null,
+      "size": 10,
+      "loc": 10,
+      "group": 9,
+      "imports": 3
+    },
+    {
+      "id": "frontend/src/pages/HomePage.jsx",
+      "type": "route",
+      "language": "javascript",
+      "framework": null,
+      "size": 68,
+      "loc": 68,
+      "group": 15,
+      "imports": 3
+    },
+    {
+      "id": "frontend/src/pages/LibraryPage.jsx",
+      "type": "route",
+      "language": "javascript",
+      "framework": null,
+      "size": 103,
+      "loc": 103,
+      "group": 15,
+      "imports": 4
+    },
+    {
+      "id": "frontend/src/pages/ScanPage.jsx",
+      "type": "route",
+      "language": "javascript",
+      "framework": null,
+      "size": 166,
+      "loc": 166,
+      "group": 15,
+      "imports": 6
+    },
+    {
+      "id": "frontend/src/services/api.js",
+      "type": "module",
+      "language": "javascript",
+      "framework": null,
+      "size": 46,
+      "loc": 46,
+      "group": 16,
+      "imports": 2
+    },
+    {
+      "id": "frontend/src/services/authService.js",
+      "type": "module",
+      "language": "javascript",
+      "framework": null,
+      "size": 85,
+      "loc": 85,
+      "group": 16,
+      "imports": 2
+    },
+    {
+      "id": "frontend/src/services/bookService.js",
+      "type": "module",
+      "language": "javascript",
+      "framework": null,
+      "size": 23,
+      "loc": 23,
+      "group": 16,
+      "imports": 1
+    },
+    {
+      "id": "frontend/src/services/userBookService.js",
+      "type": "module",
+      "language": "javascript",
+      "framework": null,
+      "size": 63,
+      "loc": 63,
+      "group": 16,
+      "imports": 1
+    },
+    {
+      "id": "frontend/src/utils/tokenStorage.js",
+      "type": "module",
+      "language": "javascript",
+      "framework": null,
+      "size": 39,
+      "loc": 39,
+      "group": 17,
       "imports": 0
     },
     {
-      "id": "inspect",
+      "id": "frontend/vite.config.js",
+      "type": "config",
+      "language": "javascript",
+      "framework": null,
+      "size": 18,
+      "loc": 18,
+      "group": 18,
+      "imports": 2
+    },
+    {
+      "id": "react-router-dom",
       "type": "import",
+      "language": "javascript",
       "size": 40,
       "loc": 0,
-      "group": 109,
+      "group": 9000,
       "imports": 0
     },
     {
-      "id": "math",
+      "id": "react",
       "type": "import",
+      "language": "javascript",
       "size": 40,
       "loc": 0,
-      "group": 109,
+      "group": 9000,
       "imports": 0
     },
     {
-      "id": "shutil",
+      "id": "html5-qrcode",
       "type": "import",
+      "language": "javascript",
       "size": 40,
       "loc": 0,
-      "group": 109,
+      "group": 9000,
       "imports": 0
     },
     {
-      "id": "openai",
+      "id": "react-dom",
       "type": "import",
+      "language": "javascript",
       "size": 40,
       "loc": 0,
-      "group": 109,
+      "group": 9000,
       "imports": 0
     },
     {
-      "id": "sys",
+      "id": "axios",
       "type": "import",
+      "language": "javascript",
       "size": 40,
       "loc": 0,
-      "group": 109,
+      "group": 9000,
       "imports": 0
     },
     {
-      "id": "click",
+      "id": "vite",
       "type": "import",
+      "language": "javascript",
       "size": 40,
       "loc": 0,
-      "group": 109,
+      "group": 9000,
       "imports": 0
     },
     {
-      "id": "builtins",
+      "id": "@vitejs/plugin-react",
       "type": "import",
+      "language": "javascript",
       "size": 40,
       "loc": 0,
-      "group": 109,
+      "group": 9000,
+      "imports": 0
+    },
+    {
+      "id": "frontend/src/App.css",
+      "type": "style",
+      "language": "css",
+      "size": 112,
+      "loc": 112,
+      "group": 9,
+      "imports": 0
+    },
+    {
+      "id": "frontend/src/components/auth/Auth.css",
+      "type": "style",
+      "language": "css",
+      "size": 55,
+      "loc": 55,
+      "group": 10,
+      "imports": 0
+    },
+    {
+      "id": "frontend/src/components/books/BarcodeScanner.css",
+      "type": "style",
+      "language": "css",
+      "size": 21,
+      "loc": 21,
+      "group": 11,
+      "imports": 0
+    },
+    {
+      "id": "frontend/src/components/common/Navbar.css",
+      "type": "style",
+      "language": "css",
+      "size": 61,
+      "loc": 61,
+      "group": 12,
+      "imports": 0
+    },
+    {
+      "id": "frontend/src/components/library/BookCard.css",
+      "type": "style",
+      "language": "css",
+      "size": 89,
+      "loc": 89,
+      "group": 13,
+      "imports": 0
+    },
+    {
+      "id": "frontend/src/pages/HomePage.css",
+      "type": "style",
+      "language": "css",
+      "size": 81,
+      "loc": 81,
+      "group": 15,
+      "imports": 0
+    },
+    {
+      "id": "frontend/src/pages/LibraryPage.css",
+      "type": "style",
+      "language": "css",
+      "size": 69,
+      "loc": 69,
+      "group": 15,
+      "imports": 0
+    },
+    {
+      "id": "frontend/src/pages/ScanPage.css",
+      "type": "style",
+      "language": "css",
+      "size": 134,
+      "loc": 134,
+      "group": 15,
       "imports": 0
     }
   ],
   "links": [
     {
-      "source": "orchid/agent_manager.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agent_manager.py",
+      "source": "backend/alembic/env.py",
       "target": "logging",
-      "weight": 1
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/agent_manager.py",
-      "target": "threading",
-      "weight": 1
+      "source": "backend/alembic/env.py",
+      "target": "sqlalchemy",
+      "weight": 2,
+      "kind": "imports"
     },
     {
-      "source": "orchid/agent_manager.py",
-      "target": "dataclasses",
-      "weight": 1
+      "source": "backend/alembic/env.py",
+      "target": "alembic",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/agent_manager.py",
-      "target": "datetime",
-      "weight": 1
+      "source": "backend/alembic/env.py",
+      "target": "app",
+      "weight": 3,
+      "kind": "imports"
     },
     {
-      "source": "orchid/agent_manager.py",
+      "source": "backend/alembic/versions/001_initial_schema.py",
       "target": "typing",
-      "weight": 1
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/agent_manager.py",
-      "target": "orchid/orchestrator.py",
-      "weight": 1
+      "source": "backend/alembic/versions/001_initial_schema.py",
+      "target": "alembic",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/agent_manager.py",
-      "target": "orchid/session.py",
-      "weight": 1
+      "source": "backend/alembic/versions/001_initial_schema.py",
+      "target": "sqlalchemy",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/agent_manager.py",
-      "target": "apscheduler",
-      "weight": 1
+      "source": "backend/app/config.py",
+      "target": "pydantic_settings",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/agents/base.py",
-      "target": "__future__",
-      "weight": 1
+      "source": "backend/app/database.py",
+      "target": "sqlalchemy",
+      "weight": 3,
+      "kind": "imports"
     },
     {
-      "source": "orchid/agents/base.py",
-      "target": "json",
-      "weight": 2
+      "source": "backend/app/database.py",
+      "target": "app",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/agents/base.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/base.py",
-      "target": "re",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/base.py",
-      "target": "collections",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/base.py",
-      "target": "datetime",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/base.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/base.py",
+      "source": "backend/app/dependencies.py",
       "target": "typing",
-      "weight": 1
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/agents/base.py",
-      "target": "orchid/__init__.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/base.py",
-      "target": "orchid/tools/models.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/base.py",
-      "target": "orchid/tools/consistency.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/base.py",
-      "target": "orchid/tools/filesystem.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/base.py",
-      "target": "orchid/tools/shell.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/base.py",
-      "target": "concurrent",
-      "weight": 2
-    },
-    {
-      "source": "orchid/agents/delegator.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/delegator.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/delegator.py",
-      "target": "datetime",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/delegator.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/delegator.py",
-      "target": "orchid/__init__.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/delegator.py",
-      "target": "orchid/memory/vector.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/delegator.py",
-      "target": "orchid/session.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/delegator.py",
-      "target": "orchid/agents/base.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/delegator.py",
-      "target": "orchid/agents/developer.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/delegator.py",
-      "target": "orchid/agents/researcher.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/delegator.py",
-      "target": "orchid/agents/reviewer.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/developer.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/developer.py",
-      "target": "orchid/agents/base.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/discussion_agent.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/discussion_agent.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/discussion_agent.py",
-      "target": "re",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/discussion_agent.py",
-      "target": "dataclasses",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/discussion_agent.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/discussion_agent.py",
-      "target": "orchid/__init__.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/agents/discussion_agent.py",
-      "target": "orchid/providers/registry.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/discussion_agent.py",
-      "target": "orchid/machine_profile.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/pm_agent.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/pm_agent.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/pm_agent.py",
-      "target": "collections",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/pm_agent.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/pm_agent.py",
-      "target": "orchid/providers/__init__.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/agents/product_manager.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/product_manager.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/product_manager.py",
-      "target": "dataclasses",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/product_manager.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/product_manager.py",
-      "target": "orchid/__init__.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/agents/product_manager.py",
-      "target": "orchid/discussion.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/product_manager.py",
-      "target": "orchid/machine_profile.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/product_manager.py",
-      "target": "orchid/providers/registry.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/project_manager.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/project_manager.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/project_manager.py",
-      "target": "re",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/project_manager.py",
-      "target": "dataclasses",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/project_manager.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/project_manager.py",
-      "target": "orchid/__init__.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/agents/project_manager.py",
-      "target": "orchid/machine_profile.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/project_manager.py",
-      "target": "orchid/providers/registry.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/researcher.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/researcher.py",
-      "target": "orchid/agents/base.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/researcher.py",
-      "target": "orchid/tools/search.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/reviewer.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/reviewer.py",
-      "target": "orchid/agents/base.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/tester.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/tester.py",
-      "target": "orchid/agents/base.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/agents/tester.py",
-      "target": "orchid/tools/shell.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/config.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/config.py",
-      "target": "copy",
-      "weight": 1
-    },
-    {
-      "source": "orchid/config.py",
-      "target": "os",
-      "weight": 1
-    },
-    {
-      "source": "orchid/config.py",
-      "target": "re",
-      "weight": 1
-    },
-    {
-      "source": "orchid/config.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/config.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/config.py",
-      "target": "yaml",
-      "weight": 1
-    },
-    {
-      "source": "orchid/config.py",
-      "target": "dotenv",
-      "weight": 1
-    },
-    {
-      "source": "orchid/discovery.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/discovery.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/discovery.py",
-      "target": "threading",
-      "weight": 1
-    },
-    {
-      "source": "orchid/discovery.py",
-      "target": "collections",
-      "weight": 1
-    },
-    {
-      "source": "orchid/discovery.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/discovery.py",
-      "target": "watchdog",
-      "weight": 2
-    },
-    {
-      "source": "orchid/discussion.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/discussion.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "orchid/discussion.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/discussion.py",
-      "target": "datetime",
-      "weight": 1
-    },
-    {
-      "source": "orchid/discussion.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/errors.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/gates.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/gates.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/gates.py",
-      "target": "datetime",
-      "weight": 1
-    },
-    {
-      "source": "orchid/gates.py",
-      "target": "enum",
-      "weight": 1
-    },
-    {
-      "source": "orchid/gates.py",
-      "target": "orchid/__init__.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/gates.py",
-      "target": "orchid/lifecycle.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/background_runner.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/background_runner.py",
-      "target": "asyncio",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/background_runner.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/background_runner.py",
-      "target": "threading",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/background_runner.py",
-      "target": "collections",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/background_runner.py",
-      "target": "concurrent",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/background_runner.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/background_runner.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/background_runner.py",
-      "target": "orchid/__init__.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/background_runner.py",
-      "target": "orchid/session.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/background_runner.py",
-      "target": "orchid/orchestrator.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/background_runner.py",
-      "target": "orchid/memory/state.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/central_bot.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/central_bot.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/central_bot.py",
-      "target": "os",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/central_bot.py",
-      "target": "threading",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/central_bot.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/central_bot.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/central_bot.py",
-      "target": "orchid/__init__.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/central_bot.py",
-      "target": "orchid/interfaces/telegram_central.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/central_bot.py",
-      "target": "orchid/interfaces/slack_central.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "importlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "dotenv",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "typer",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "rich",
-      "weight": 10
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/lifecycle.py",
-      "weight": 4
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/session.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/memory/state.py",
-      "weight": 5
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/orchestrator.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/agents/base.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/providers/registry.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "json",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/__init__.py",
-      "weight": 5
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/tools/search.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/memory/vector.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "time",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/gates.py",
-      "weight": 3
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/agents/discussion_agent.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/discussion.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/agents/product_manager.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/agents/project_manager.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/interfaces/multi_formatter.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/multi.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/machine_profile.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/project_creator.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "re",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/memory/decisions.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "os",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/interfaces/telegram_bot.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/interfaces/slack_bot.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/cli.py",
-      "target": "orchid/interfaces/web_server.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/multi_formatter.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/multi_formatter.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/multi_formatter.py",
-      "target": "orchid/interfaces/telegram_formatter.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "asyncio",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "threading",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "slack_bolt",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "slack_sdk",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "orchid/interfaces/background_runner.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "orchid/session.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "orchid/interfaces/slack_formatter.py",
-      "weight": 10
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "orchid/interfaces/multi_formatter.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "orchid/memory/state.py",
-      "weight": 4
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "orchid/__init__.py",
-      "weight": 4
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "orchid/memory/vector.py",
-      "weight": 3
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "orchid/tools/search.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "re",
-      "weight": 3
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "orchid/multi.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "orchid/tools/models.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_bot.py",
-      "target": "orchid/providers/registry.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "asyncio",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "os",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "re",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "tempfile",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "threading",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "slack_bolt",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "slack_sdk",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "orchid/lifecycle.py",
-      "weight": 5
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "orchid/memory/state.py",
-      "weight": 3
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "orchid/session.py",
-      "weight": 6
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "orchid/interfaces/slack_formatter.py",
-      "weight": 7
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "orchid/__init__.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "orchid/memory/vector.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "orchid/tools/search.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "orchid/gates.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "orchid/project_creator.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "orchid/agents/discussion_agent.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "orchid/discussion.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "orchid/interfaces/background_runner.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_central.py",
-      "target": "yaml",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_formatter.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_formatter.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/slack_formatter.py",
-      "target": "orchid/memory/state.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/telegram_bot.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_bot.py",
-      "target": "asyncio",
-      "weight": 3
-    },
-    {
-      "source": "orchid/interfaces/telegram_bot.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_bot.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_bot.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_bot.py",
-      "target": "telegram",
-      "weight": 3
-    },
-    {
-      "source": "orchid/interfaces/telegram_bot.py",
-      "target": "orchid/interfaces/background_runner.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_bot.py",
-      "target": "orchid/session.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/telegram_bot.py",
-      "target": "orchid/interfaces/telegram_formatter.py",
-      "weight": 6
-    },
-    {
-      "source": "orchid/interfaces/telegram_bot.py",
-      "target": "orchid/interfaces/multi_formatter.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_bot.py",
-      "target": "orchid/memory/state.py",
-      "weight": 3
-    },
-    {
-      "source": "orchid/interfaces/telegram_bot.py",
-      "target": "threading",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_bot.py",
-      "target": "orchid/multi.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_bot.py",
-      "target": "orchid/__init__.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/telegram_bot.py",
-      "target": "orchid/memory/vector.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/telegram_bot.py",
-      "target": "orchid/tools/search.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_bot.py",
-      "target": "orchid/memory/decisions.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "asyncio",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "os",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "tempfile",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "threading",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "datetime",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "telegram",
-      "weight": 3
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "orchid/lifecycle.py",
-      "weight": 4
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "orchid/memory/state.py",
-      "weight": 3
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "orchid/session.py",
-      "weight": 5
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "orchid/interfaces/telegram_formatter.py",
-      "weight": 6
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "orchid/__init__.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "orchid/memory/vector.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "orchid/tools/search.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "orchid/gates.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "re",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "orchid/project_creator.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "orchid/agents/discussion_agent.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "orchid/discussion.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "yaml",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_central.py",
-      "target": "orchid/interfaces/background_runner.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_formatter.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/telegram_formatter.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "asyncio",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "threading",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "concurrent",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "contextlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "datetime",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
+      "source": "backend/app/dependencies.py",
       "target": "fastapi",
-      "weight": 4
+      "weight": 2,
+      "kind": "imports"
     },
     {
-      "source": "orchid/interfaces/web_server.py",
+      "source": "backend/app/dependencies.py",
+      "target": "sqlalchemy",
+      "weight": 1,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/dependencies.py",
+      "target": "jose",
+      "weight": 1,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/dependencies.py",
+      "target": "app",
+      "weight": 3,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/main.py",
+      "target": "fastapi",
+      "weight": 2,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/main.py",
+      "target": "app",
+      "weight": 2,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/models/__init__.py",
+      "target": "app",
+      "weight": 5,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/models/book.py",
+      "target": "datetime",
+      "weight": 1,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/models/book.py",
+      "target": "sqlalchemy",
+      "weight": 2,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/models/book.py",
+      "target": "app",
+      "weight": 1,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/models/friendship.py",
+      "target": "datetime",
+      "weight": 1,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/models/friendship.py",
+      "target": "sqlalchemy",
+      "weight": 2,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/models/friendship.py",
+      "target": "app",
+      "weight": 1,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/models/privacy_setting.py",
+      "target": "enum",
+      "weight": 1,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/models/privacy_setting.py",
+      "target": "sqlalchemy",
+      "weight": 2,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/models/privacy_setting.py",
+      "target": "app",
+      "weight": 1,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/models/user.py",
+      "target": "datetime",
+      "weight": 1,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/models/user.py",
+      "target": "sqlalchemy",
+      "weight": 2,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/models/user.py",
+      "target": "app",
+      "weight": 1,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/models/user_book.py",
+      "target": "enum",
+      "weight": 1,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/models/user_book.py",
+      "target": "datetime",
+      "weight": 1,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/models/user_book.py",
+      "target": "sqlalchemy",
+      "weight": 2,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/models/user_book.py",
+      "target": "app",
+      "weight": 1,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/routers/auth.py",
+      "target": "fastapi",
+      "weight": 1,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/routers/auth.py",
+      "target": "sqlalchemy",
+      "weight": 1,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/routers/auth.py",
+      "target": "app",
+      "weight": 5,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/routers/books.py",
+      "target": "fastapi",
+      "weight": 1,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/routers/books.py",
+      "target": "app",
+      "weight": 4,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/routers/social.py",
+      "target": "fastapi",
+      "weight": 1,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/routers/social.py",
+      "target": "sqlalchemy",
+      "weight": 1,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/routers/social.py",
+      "target": "app",
+      "weight": 6,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/routers/user_books.py",
+      "target": "fastapi",
+      "weight": 1,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/routers/user_books.py",
+      "target": "app",
+      "weight": 5,
+      "kind": "imports"
+    },
+    {
+      "source": "backend/app/schemas/auth.py",
       "target": "pydantic",
-      "weight": 1
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "orchid/__init__.py",
-      "weight": 4
+      "source": "backend/app/schemas/auth.py",
+      "target": "app",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "orchid/orchestrator.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "orchid/session.py",
-      "weight": 3
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "orchid/memory/state.py",
-      "weight": 4
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "yaml",
-      "weight": 3
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "orchid/discovery.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "json",
-      "weight": 3
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "orchid/providers/registry.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "orchid/memory/decisions.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "orchid/memory/vector.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "orchid/tools/search.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "re",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "orchid/machine_profile.py",
-      "weight": 3
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "orchid/project_creator.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "orchid/lifecycle.py",
-      "weight": 6
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "orchid/discussion.py",
-      "weight": 3
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "orchid/gates.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "uvicorn",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "importlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "orchid/agents/discussion_agent.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "orchid/agents/product_manager.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "orchid/agents/project_manager.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/interfaces/web_server.py",
-      "target": "orchid/interfaces/central_bot.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/lifecycle.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/lifecycle.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "orchid/lifecycle.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/lifecycle.py",
-      "target": "dataclasses",
-      "weight": 1
-    },
-    {
-      "source": "orchid/lifecycle.py",
+      "source": "backend/app/schemas/book.py",
       "target": "datetime",
-      "weight": 1
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/lifecycle.py",
-      "target": "pathlib",
-      "weight": 1
+      "source": "backend/app/schemas/book.py",
+      "target": "pydantic",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/machine_profile.py",
-      "target": "__future__",
-      "weight": 1
+      "source": "backend/app/schemas/privacy.py",
+      "target": "pydantic",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/machine_profile.py",
-      "target": "logging",
-      "weight": 1
+      "source": "backend/app/schemas/privacy.py",
+      "target": "app",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/machine_profile.py",
-      "target": "dataclasses",
-      "weight": 1
-    },
-    {
-      "source": "orchid/machine_profile.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/machine_profile.py",
-      "target": "yaml",
-      "weight": 1
-    },
-    {
-      "source": "orchid/memory/decisions.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/memory/decisions.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "orchid/memory/decisions.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/memory/decisions.py",
+      "source": "backend/app/schemas/user.py",
       "target": "datetime",
-      "weight": 1
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/memory/decisions.py",
-      "target": "pathlib",
-      "weight": 1
+      "source": "backend/app/schemas/user.py",
+      "target": "pydantic",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/memory/decisions.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/memory/decisions.py",
-      "target": "orchid/__init__.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/memory/state.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/memory/state.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "orchid/memory/state.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/memory/state.py",
-      "target": "re",
-      "weight": 1
-    },
-    {
-      "source": "orchid/memory/state.py",
-      "target": "dataclasses",
-      "weight": 1
-    },
-    {
-      "source": "orchid/memory/state.py",
+      "source": "backend/app/schemas/user_book.py",
       "target": "datetime",
-      "weight": 2
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/memory/state.py",
-      "target": "enum",
-      "weight": 1
+      "source": "backend/app/schemas/user_book.py",
+      "target": "pydantic",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/memory/state.py",
-      "target": "pathlib",
-      "weight": 1
+      "source": "backend/app/schemas/user_book.py",
+      "target": "app",
+      "weight": 2,
+      "kind": "imports"
     },
     {
-      "source": "orchid/memory/state.py",
-      "target": "orchid/__init__.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/memory/vector.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/memory/vector.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/memory/vector.py",
-      "target": "warnings",
-      "weight": 1
-    },
-    {
-      "source": "orchid/memory/vector.py",
+      "source": "backend/app/services/auth_service.py",
       "target": "datetime",
-      "weight": 1
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/memory/vector.py",
-      "target": "pathlib",
-      "weight": 1
+      "source": "backend/app/services/auth_service.py",
+      "target": "passlib",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/memory/vector.py",
-      "target": "typing",
-      "weight": 1
+      "source": "backend/app/services/auth_service.py",
+      "target": "jose",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/memory/vector.py",
-      "target": "tiktoken",
-      "weight": 1
+      "source": "backend/app/services/auth_service.py",
+      "target": "app",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/memory/vector.py",
-      "target": "orchid/tools/models.py",
-      "weight": 1
+      "source": "backend/app/services/book_service.py",
+      "target": "sqlalchemy",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/memory/vector.py",
-      "target": "chromadb",
-      "weight": 1
+      "source": "backend/app/services/book_service.py",
+      "target": "app",
+      "weight": 2,
+      "kind": "imports"
     },
     {
-      "source": "orchid/multi.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/multi.py",
-      "target": "logging",
-      "weight": 2
-    },
-    {
-      "source": "orchid/multi.py",
-      "target": "multiprocessing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/multi.py",
-      "target": "signal",
-      "weight": 1
-    },
-    {
-      "source": "orchid/multi.py",
-      "target": "time",
-      "weight": 1
-    },
-    {
-      "source": "orchid/multi.py",
-      "target": "collections",
-      "weight": 1
-    },
-    {
-      "source": "orchid/multi.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/multi.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/multi.py",
-      "target": "orchid/tools/models.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/multi.py",
-      "target": "orchid/memory/state.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/multi.py",
-      "target": "orchid/orchestrator.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/multi.py",
-      "target": "orchid/session.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/multi.py",
-      "target": "orchid/__init__.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/multi.py",
-      "target": "orchid/providers/local.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/multi.py",
-      "target": "orchid/providers/ollama.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/multi.py",
-      "target": "orchid/providers/registry.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "time",
-      "weight": 1
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "collections",
-      "weight": 2
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "datetime",
-      "weight": 3
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "orchid/__init__.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "orchid/memory/state.py",
-      "weight": 3
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "orchid/session.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "orchid/tools/models.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "orchid/agents/base.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "orchid/agents/developer.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "orchid/agents/researcher.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "orchid/agents/reviewer.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "orchid/agents/tester.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "orchid/agents/delegator.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "orchid/providers/base.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "orchid/providers/registry.py",
-      "weight": 4
-    },
-    {
-      "source": "orchid/orchestrator.py",
-      "target": "orchid/tools/project_context.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/planning.py",
-      "target": "asyncio",
-      "weight": 1
-    },
-    {
-      "source": "orchid/planning.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "orchid/planning.py",
-      "target": "re",
-      "weight": 1
-    },
-    {
-      "source": "orchid/planning.py",
-      "target": "collections",
-      "weight": 1
-    },
-    {
-      "source": "orchid/planning.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/planning.py",
-      "target": "orchid/providers/registry.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/project_creator.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/project_creator.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/project_creator.py",
-      "target": "subprocess",
-      "weight": 1
-    },
-    {
-      "source": "orchid/project_creator.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/project_creator.py",
-      "target": "orchid/lifecycle.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/project_creator.py",
-      "target": "orchid/machine_profile.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/__init__.py",
-      "target": "orchid/providers/base.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/__init__.py",
-      "target": "orchid/providers/registry.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/anthropic.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/anthropic.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/anthropic.py",
-      "target": "os",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/anthropic.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/anthropic.py",
-      "target": "tenacity",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/anthropic.py",
-      "target": "orchid/errors.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/anthropic.py",
-      "target": "orchid/providers/base.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/anthropic.py",
-      "target": "orchid/__init__.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/providers/anthropic.py",
-      "target": "orchid/providers/anthropic.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/base.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/base.py",
-      "target": "time",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/base.py",
-      "target": "abc",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/base.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/bedrock.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/bedrock.py",
-      "target": "os",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/bedrock.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/bedrock.py",
-      "target": "orchid/errors.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/bedrock.py",
-      "target": "orchid/providers/base.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/bedrock.py",
-      "target": "boto3",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/local.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/local.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/local.py",
-      "target": "os",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/local.py",
-      "target": "collections",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/local.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/local.py",
-      "target": "orchid/errors.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/local.py",
-      "target": "orchid/providers/base.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/local.py",
-      "target": "orchid/providers/openai.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/local.py",
-      "target": "orchid/__init__.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/local.py",
+      "source": "backend/app/services/google_books.py",
       "target": "httpx",
-      "weight": 2
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/providers/local.py",
-      "target": "orchid/session.py",
-      "weight": 1
+      "source": "backend/app/services/google_books.py",
+      "target": "fastapi",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/providers/ollama.py",
-      "target": "__future__",
-      "weight": 1
+      "source": "backend/app/services/google_books.py",
+      "target": "app",
+      "weight": 2,
+      "kind": "imports"
     },
     {
-      "source": "orchid/providers/ollama.py",
-      "target": "logging",
-      "weight": 1
+      "source": "backend/app/services/privacy_service.py",
+      "target": "sqlalchemy",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/providers/ollama.py",
-      "target": "os",
-      "weight": 1
+      "source": "backend/app/services/privacy_service.py",
+      "target": "app",
+      "weight": 4,
+      "kind": "imports"
     },
     {
-      "source": "orchid/providers/ollama.py",
-      "target": "typing",
-      "weight": 1
+      "source": "backend/app/services/user_book_service.py",
+      "target": "sqlalchemy",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/providers/ollama.py",
-      "target": "orchid/errors.py",
-      "weight": 1
+      "source": "backend/app/services/user_book_service.py",
+      "target": "fastapi",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/providers/ollama.py",
-      "target": "orchid/providers/base.py",
-      "weight": 1
+      "source": "backend/app/services/user_book_service.py",
+      "target": "app",
+      "weight": 3,
+      "kind": "imports"
     },
     {
-      "source": "orchid/providers/ollama.py",
-      "target": "orchid/providers/openai.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/ollama.py",
-      "target": "httpx",
-      "weight": 2
-    },
-    {
-      "source": "orchid/providers/openai.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/openai.py",
-      "target": "os",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/openai.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/openai.py",
-      "target": "orchid/errors.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/openai.py",
-      "target": "orchid/providers/base.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/openai.py",
-      "target": "orchid/providers/openai.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/providers/registry.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/registry.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/registry.py",
-      "target": "os",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/registry.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/registry.py",
-      "target": "orchid/providers/base.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/registry.py",
-      "target": "re",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/registry.py",
-      "target": "orchid/providers/anthropic.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/providers/registry.py",
-      "target": "orchid/providers/local.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/providers/registry.py",
-      "target": "orchid/providers/ollama.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/registry.py",
-      "target": "orchid/providers/openai.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/providers/registry.py",
-      "target": "orchid/providers/bedrock.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/providers/registry.py",
-      "target": "orchid/__init__.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/runner.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/runner.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/runner.py",
-      "target": "threading",
-      "weight": 1
-    },
-    {
-      "source": "orchid/runner.py",
-      "target": "concurrent",
-      "weight": 1
-    },
-    {
-      "source": "orchid/runner.py",
-      "target": "dataclasses",
-      "weight": 1
-    },
-    {
-      "source": "orchid/runner.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/runner.py",
-      "target": "orchid/memory/state.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/runner.py",
-      "target": "orchid/orchestrator.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/runner.py",
-      "target": "orchid/session.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/session.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/session.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "orchid/session.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/session.py",
-      "target": "datetime",
-      "weight": 1
-    },
-    {
-      "source": "orchid/session.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/session.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/session.py",
-      "target": "orchid/__init__.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/session.py",
-      "target": "orchid/memory/__init__.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/session.py",
-      "target": "orchid/memory/decisions.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/session.py",
-      "target": "orchid/memory/vector.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/session.py",
-      "target": "orchid/providers/anthropic.py",
-      "weight": 2
-    },
-    {
-      "source": "orchid/session.py",
-      "target": "orchid/providers/registry.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/session.py",
-      "target": "orchid/tools/models.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/auto_review.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/auto_review.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/auto_review.py",
-      "target": "subprocess",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/auto_review.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/auto_review.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/auto_review.py",
-      "target": "orchid/tools/consistency.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/consistency.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/consistency.py",
-      "target": "re",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/consistency.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/consistency.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/filesystem.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/filesystem.py",
-      "target": "subprocess",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/filesystem.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/models.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/models.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/models.py",
-      "target": "os",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/models.py",
-      "target": "dataclasses",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/models.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/models.py",
-      "target": "orchid/__init__.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/models.py",
-      "target": "orchid/providers/registry.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/models.py",
-      "target": "httpx",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/models.py",
-      "target": "sentence_transformers",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/project_context.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/project_context.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/project_context.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/project_context.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/project_context.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/project_context.py",
-      "target": "re",
-      "weight": 2
-    },
-    {
-      "source": "orchid/tools/project_context.py",
-      "target": "configparser",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/project_context.py",
-      "target": "tomllib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/project_context.py",
-      "target": "tomli",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/retry.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/retry.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/retry.py",
-      "target": "dataclasses",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/retry.py",
-      "target": "httpx",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/retry.py",
-      "target": "tenacity",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/search.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/search.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/search.py",
-      "target": "os",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/search.py",
-      "target": "time",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/search.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/search.py",
-      "target": "orchid/__init__.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/search.py",
-      "target": "httpx",
-      "weight": 5
-    },
-    {
-      "source": "orchid/tools/search.py",
-      "target": "trafilatura",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/search.py",
-      "target": "bs4",
-      "weight": 2
-    },
-    {
-      "source": "orchid/tools/search.py",
+      "source": "isbn_info_from_barcode.py",
       "target": "urllib",
-      "weight": 1
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "orchid/tools/session_log_parser.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/session_log_parser.py",
-      "target": "dataclasses",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/session_log_parser.py",
-      "target": "datetime",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/session_log_parser.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/shell.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/shell.py",
-      "target": "re",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/shell.py",
-      "target": "shlex",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/shell.py",
-      "target": "subprocess",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/shell.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/shell.py",
-      "target": "orchid/__init__.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/tools/shell.py",
-      "target": "orchid/errors.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/web/server.py",
-      "target": "asyncio",
-      "weight": 1
-    },
-    {
-      "source": "orchid/web/server.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "orchid/web/server.py",
-      "target": "fastapi",
-      "weight": 3
-    },
-    {
-      "source": "orchid/web/server.py",
-      "target": "orchid",
-      "weight": 2
-    },
-    {
-      "source": "orchid/web/server.py",
-      "target": "orchid/planning.py",
-      "weight": 1
-    },
-    {
-      "source": "orchid/web/server.py",
-      "target": "orchid/runner.py",
-      "weight": 1
-    },
-    {
-      "source": "src/__init__.py",
-      "target": "src/utils.py",
-      "weight": 1
-    },
-    {
-      "source": "src/main.py",
-      "target": "src/utils.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_caching.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_caching.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_caching.py",
-      "target": "unittest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_caching.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_caching.py",
-      "target": "orchid/providers/base.py",
-      "weight": 3
-    },
-    {
-      "source": "tests/test_caching.py",
-      "target": "orchid/providers/anthropic.py",
-      "weight": 10
-    },
-    {
-      "source": "tests/test_caching.py",
-      "target": "orchid/providers/local.py",
-      "weight": 8
-    },
-    {
-      "source": "tests/test_caching.py",
-      "target": "orchid/providers/ollama.py",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_caching.py",
-      "target": "orchid/session.py",
-      "weight": 5
-    },
-    {
-      "source": "tests/test_caching.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_caching.py",
+      "source": "isbn_info_from_barcode.py",
       "target": "json",
-      "weight": 1
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "__future__",
-      "weight": 1
+      "source": "isbn_info_from_barcode.py",
+      "target": "textwrap",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "json",
-      "weight": 1
+      "source": "isbn_info_from_barcode.py",
+      "target": "cv2",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "os",
-      "weight": 1
+      "source": "isbn_info_from_barcode.py",
+      "target": "pyzbar",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "tempfile",
-      "weight": 1
+      "source": "frontend/src/App.jsx",
+      "target": "react-router-dom",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "threading",
-      "weight": 1
+      "source": "frontend/src/App.jsx",
+      "target": "frontend/src/context/AuthContext.jsx",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "pathlib",
-      "weight": 1
+      "source": "frontend/src/App.jsx",
+      "target": "frontend/src/components/common/Navbar.jsx",
+      "weight": 1,
+      "kind": "renders"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "types",
-      "weight": 1
+      "source": "frontend/src/App.jsx",
+      "target": "frontend/src/pages/HomePage.jsx",
+      "weight": 1,
+      "kind": "renders"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "typing",
-      "weight": 1
+      "source": "frontend/src/App.jsx",
+      "target": "frontend/src/pages/LibraryPage.jsx",
+      "weight": 1,
+      "kind": "renders"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "unittest",
-      "weight": 1
+      "source": "frontend/src/App.jsx",
+      "target": "frontend/src/pages/ScanPage.jsx",
+      "weight": 1,
+      "kind": "renders"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "pytest",
-      "weight": 1
+      "source": "frontend/src/App.jsx",
+      "target": "frontend/src/components/auth/Login.jsx",
+      "weight": 1,
+      "kind": "renders"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "orchid/interfaces/central_bot.py",
-      "weight": 5
+      "source": "frontend/src/App.jsx",
+      "target": "frontend/src/components/auth/Register.jsx",
+      "weight": 1,
+      "kind": "renders"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "orchid/lifecycle.py",
-      "weight": 1
+      "source": "frontend/src/components/auth/Login.jsx",
+      "target": "react",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "orchid/gates.py",
-      "weight": 1
+      "source": "frontend/src/components/auth/Login.jsx",
+      "target": "react-router-dom",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "re",
-      "weight": 1
+      "source": "frontend/src/components/auth/Login.jsx",
+      "target": "frontend/src/context/AuthContext.jsx",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "orchid/interfaces/cli.py",
-      "weight": 6
+      "source": "frontend/src/components/auth/Register.jsx",
+      "target": "react",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "inspect",
-      "weight": 4
+      "source": "frontend/src/components/auth/Register.jsx",
+      "target": "react-router-dom",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "typer",
-      "weight": 2
+      "source": "frontend/src/components/auth/Register.jsx",
+      "target": "frontend/src/context/AuthContext.jsx",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "orchid/interfaces/__init__.py",
-      "weight": 2
+      "source": "frontend/src/components/books/BarcodeScanner.jsx",
+      "target": "react",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "orchid/interfaces/telegram_central.py",
-      "weight": 10
+      "source": "frontend/src/components/books/BarcodeScanner.jsx",
+      "target": "html5-qrcode",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "orchid/interfaces/slack_central.py",
-      "weight": 7
+      "source": "frontend/src/components/common/Navbar.jsx",
+      "target": "react-router-dom",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "orchid/agents/discussion_agent.py",
-      "weight": 1
+      "source": "frontend/src/components/common/Navbar.jsx",
+      "target": "frontend/src/context/AuthContext.jsx",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_central_bots.py",
-      "target": "orchid/discussion.py",
-      "weight": 1
+      "source": "frontend/src/components/library/BookCard.jsx",
+      "target": "react",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_cli_decide.py",
-      "target": "__future__",
-      "weight": 1
+      "source": "frontend/src/components/library/BookCard.jsx",
+      "target": "frontend/src/services/userBookService.js",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_cli_decide.py",
-      "target": "json",
-      "weight": 1
+      "source": "frontend/src/context/AuthContext.jsx",
+      "target": "react",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_cli_decide.py",
-      "target": "pathlib",
-      "weight": 1
+      "source": "frontend/src/context/AuthContext.jsx",
+      "target": "frontend/src/services/authService.js",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_cli_decide.py",
-      "target": "typer",
-      "weight": 1
+      "source": "frontend/src/main.jsx",
+      "target": "react",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_cli_decide.py",
-      "target": "orchid/interfaces/cli.py",
-      "weight": 1
+      "source": "frontend/src/main.jsx",
+      "target": "react-dom",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_config.py",
-      "target": "__future__",
-      "weight": 1
+      "source": "frontend/src/main.jsx",
+      "target": "frontend/src/App.jsx",
+      "weight": 1,
+      "kind": "renders"
     },
     {
-      "source": "tests/test_config.py",
-      "target": "yaml",
-      "weight": 1
+      "source": "frontend/src/pages/HomePage.jsx",
+      "target": "react-router-dom",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_config.py",
-      "target": "pathlib",
-      "weight": 1
+      "source": "frontend/src/pages/HomePage.jsx",
+      "target": "frontend/src/context/AuthContext.jsx",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_config.py",
-      "target": "orchid/__init__.py",
-      "weight": 1
+      "source": "frontend/src/pages/LibraryPage.jsx",
+      "target": "react",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_decisions.py",
-      "target": "__future__",
-      "weight": 1
+      "source": "frontend/src/pages/LibraryPage.jsx",
+      "target": "frontend/src/services/userBookService.js",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_decisions.py",
-      "target": "orchid/memory/decisions.py",
-      "weight": 1
+      "source": "frontend/src/pages/LibraryPage.jsx",
+      "target": "frontend/src/components/library/BookCard.jsx",
+      "weight": 1,
+      "kind": "renders"
     },
     {
-      "source": "tests/test_delegation.py",
-      "target": "__future__",
-      "weight": 1
+      "source": "frontend/src/pages/ScanPage.jsx",
+      "target": "react",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_delegation.py",
-      "target": "pytest",
-      "weight": 1
+      "source": "frontend/src/pages/ScanPage.jsx",
+      "target": "react-router-dom",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_delegation.py",
-      "target": "unittest",
-      "weight": 1
+      "source": "frontend/src/pages/ScanPage.jsx",
+      "target": "frontend/src/components/books/BarcodeScanner.jsx",
+      "weight": 1,
+      "kind": "renders"
     },
     {
-      "source": "tests/test_delegation.py",
-      "target": "math",
-      "weight": 1
+      "source": "frontend/src/pages/ScanPage.jsx",
+      "target": "frontend/src/services/bookService.js",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_delegation.py",
-      "target": "orchid/agents/base.py",
-      "weight": 3
+      "source": "frontend/src/pages/ScanPage.jsx",
+      "target": "frontend/src/services/userBookService.js",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_delegation.py",
-      "target": "orchid/agents/delegator.py",
-      "weight": 6
+      "source": "frontend/src/services/api.js",
+      "target": "axios",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_delegation.py",
-      "target": "orchid/agents/developer.py",
-      "weight": 1
+      "source": "frontend/src/services/api.js",
+      "target": "frontend/src/utils/tokenStorage.js",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_delegation.py",
-      "target": "orchid/agents/researcher.py",
-      "weight": 1
+      "source": "frontend/src/services/authService.js",
+      "target": "frontend/src/services/api.js",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_delegation.py",
-      "target": "orchid/agents/reviewer.py",
-      "weight": 1
+      "source": "frontend/src/services/authService.js",
+      "target": "frontend/src/utils/tokenStorage.js",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_delegation.py",
-      "target": "orchid/memory/vector.py",
-      "weight": 1
+      "source": "frontend/src/services/bookService.js",
+      "target": "frontend/src/services/api.js",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_dependencies.py",
-      "target": "__future__",
-      "weight": 1
+      "source": "frontend/src/services/userBookService.js",
+      "target": "frontend/src/services/api.js",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_dependencies.py",
-      "target": "tempfile",
-      "weight": 1
+      "source": "frontend/vite.config.js",
+      "target": "vite",
+      "weight": 1,
+      "kind": "imports"
     },
     {
-      "source": "tests/test_dependencies.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_dependencies.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_dependencies.py",
-      "target": "orchid/memory/state.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_discovery.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_discovery.py",
-      "target": "threading",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_discovery.py",
-      "target": "time",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_discovery.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_discovery.py",
-      "target": "types",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_discovery.py",
-      "target": "unittest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_discovery.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_discovery.py",
-      "target": "orchid/discovery.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_discovery.py",
-      "target": "orchid/agent_manager.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_discovery.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_discovery.py",
-      "target": "orchid/interfaces/web_server.py",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_discovery.py",
-      "target": "shutil",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_discussion.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_discussion.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_discussion.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_discussion.py",
-      "target": "orchid/discussion.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_gates.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_gates.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_gates.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_gates.py",
-      "target": "unittest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_gates.py",
-      "target": "orchid/lifecycle.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_gates.py",
-      "target": "orchid/gates.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_gates.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_init.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_init.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_init.py",
-      "target": "typer",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_init.py",
-      "target": "orchid/interfaces/cli.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_injection.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_injection.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_injection.py",
-      "target": "unittest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_injection.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_injection.py",
-      "target": "orchid/interfaces/background_runner.py",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_injection.py",
-      "target": "orchid/agents/base.py",
-      "weight": 5
-    },
-    {
-      "source": "tests/test_integration.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_integration.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_integration.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_integration.py",
-      "target": "unittest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_integration.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_integration.py",
-      "target": "orchid/memory/state.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_integration.py",
-      "target": "orchid/session.py",
-      "weight": 7
-    },
-    {
-      "source": "tests/test_integration.py",
-      "target": "orchid/orchestrator.py",
-      "weight": 5
-    },
-    {
-      "source": "tests/test_lifecycle.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_lifecycle.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_lifecycle.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_lifecycle.py",
-      "target": "orchid/lifecycle.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_machine_profile.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_machine_profile.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_machine_profile.py",
-      "target": "yaml",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_machine_profile.py",
-      "target": "orchid/machine_profile.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_metrics.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_metrics.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_metrics.py",
-      "target": "os",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_metrics.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_metrics.py",
-      "target": "unittest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_metrics.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_metrics.py",
-      "target": "typer",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_metrics.py",
-      "target": "orchid/interfaces/cli.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_metrics.py",
-      "target": "orchid/orchestrator.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_metrics.py",
-      "target": "orchid/session.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_metrics.py",
-      "target": "fastapi",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_metrics.py",
-      "target": "orchid/interfaces/web_server.py",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_multi.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_multi.py",
-      "target": "multiprocessing",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_multi.py",
-      "target": "time",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_multi.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_multi.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_multi.py",
-      "target": "unittest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_multi.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_multi.py",
-      "target": "orchid/memory/state.py",
-      "weight": 3
-    },
-    {
-      "source": "tests/test_multi.py",
-      "target": "orchid/providers/anthropic.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_multi.py",
-      "target": "orchid/providers/local.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_multi.py",
-      "target": "orchid/providers/ollama.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_multi.py",
-      "target": "orchid/tools/models.py",
-      "weight": 3
-    },
-    {
-      "source": "tests/test_multi.py",
-      "target": "orchid/multi.py",
-      "weight": 10
-    },
-    {
-      "source": "tests/test_multi.py",
-      "target": "orchid/interfaces/multi_formatter.py",
-      "weight": 7
-    },
-    {
-      "source": "tests/test_multi.py",
-      "target": "typer",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_multi.py",
-      "target": "orchid/interfaces/cli.py",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_multi.py",
-      "target": "threading",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_notifications.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_notifications.py",
-      "target": "asyncio",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_notifications.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_notifications.py",
-      "target": "unittest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_notifications.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_notifications.py",
-      "target": "orchid/interfaces/telegram_formatter.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_notifications.py",
-      "target": "orchid/__init__.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_notifications.py",
-      "target": "orchid/interfaces/background_runner.py",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_pm_dashboard.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_pm_dashboard.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_pm_dashboard.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_pm_dashboard.py",
-      "target": "types",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_pm_dashboard.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_pm_dashboard.py",
-      "target": "fastapi",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_pm_dashboard.py",
-      "target": "orchid/interfaces/web_server.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_project_creator.py",
-      "target": "subprocess",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_project_creator.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_project_creator.py",
-      "target": "unittest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_project_creator.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_project_creator.py",
-      "target": "orchid/machine_profile.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_project_creator.py",
-      "target": "orchid/project_creator.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_project_creator.py",
-      "target": "yaml",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_project_creator.py",
-      "target": "orchid/lifecycle.py",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_project_manager.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_project_manager.py",
-      "target": "re",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_project_manager.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_project_manager.py",
-      "target": "unittest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_project_manager.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_project_manager.py",
-      "target": "orchid/agents/project_manager.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "os",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "unittest",
-      "weight": 7
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "orchid/providers/base.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "orchid/providers/registry.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "dataclasses",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "orchid/memory/state.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "orchid/orchestrator.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "orchid/session.py",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "orchid/interfaces/cli.py",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "orchid/providers/anthropic.py",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "orchid/providers/ollama.py",
-      "weight": 3
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "orchid/providers/local.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "orchid/errors.py",
-      "weight": 6
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "openai",
-      "weight": 3
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "orchid/providers/openai.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "orchid/providers/bedrock.py",
-      "weight": 5
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "sys",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "orchid/tools/models.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_providers.py",
-      "target": "orchid/interfaces/slack_bot.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_rollup.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_rollup.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_rollup.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_rollup.py",
-      "target": "unittest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_rollup.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_rollup.py",
-      "target": "orchid/memory/state.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_rollup.py",
-      "target": "orchid/__init__.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_rollup.py",
-      "target": "orchid/orchestrator.py",
-      "weight": 6
-    },
-    {
-      "source": "tests/test_rollup.py",
-      "target": "orchid/interfaces/cli.py",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_rollup.py",
-      "target": "click",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_routing.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_routing.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_routing.py",
-      "target": "orchid/tools/models.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_routing.py",
-      "target": "orchid/__init__.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_routing.py",
-      "target": "orchid/memory/state.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_routing.py",
-      "target": "logging",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_search.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_search.py",
-      "target": "os",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_search.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_search.py",
-      "target": "unittest",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_search.py",
-      "target": "orchid/tools/search.py",
-      "weight": 17
-    },
-    {
-      "source": "tests/test_search.py",
-      "target": "httpx",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_search.py",
-      "target": "orchid/agents/base.py",
-      "weight": 3
-    },
-    {
-      "source": "tests/test_search.py",
-      "target": "math",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_search.py",
-      "target": "orchid/memory/vector.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_searxng_live.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_searxng_live.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_searxng_live.py",
-      "target": "orchid/tools/search.py",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_searxng_live.py",
-      "target": "httpx",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_slack.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_slack.py",
-      "target": "os",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_slack.py",
-      "target": "types",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_slack.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_slack.py",
-      "target": "unittest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_slack.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_slack.py",
-      "target": "orchid/interfaces/slack_formatter.py",
-      "weight": 11
-    },
-    {
-      "source": "tests/test_slack.py",
-      "target": "orchid/interfaces/background_runner.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_slack.py",
-      "target": "typer",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_slack.py",
-      "target": "orchid/interfaces/cli.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_slack.py",
-      "target": "orchid/interfaces/multi_formatter.py",
-      "weight": 4
-    },
-    {
-      "source": "tests/test_slack.py",
-      "target": "orchid/interfaces/slack_bot.py",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_state.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_state.py",
-      "target": "tempfile",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_state.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_state.py",
-      "target": "orchid/memory/state.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_state.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_streaming.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_streaming.py",
-      "target": "time",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_streaming.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_streaming.py",
-      "target": "unittest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_streaming.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_streaming.py",
-      "target": "orchid/session.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_streaming.py",
-      "target": "orchid/__init__.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_streaming.py",
-      "target": "orchid/agents/base.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_telegram.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_telegram.py",
-      "target": "asyncio",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_telegram.py",
-      "target": "os",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_telegram.py",
-      "target": "threading",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_telegram.py",
-      "target": "time",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_telegram.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_telegram.py",
-      "target": "types",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_telegram.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_telegram.py",
-      "target": "unittest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_telegram.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_telegram.py",
-      "target": "orchid/interfaces/telegram_formatter.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_telegram.py",
-      "target": "orchid/memory/state.py",
-      "weight": 4
-    },
-    {
-      "source": "tests/test_telegram.py",
-      "target": "orchid/interfaces/background_runner.py",
-      "weight": 3
-    },
-    {
-      "source": "tests/test_tester_agent.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_tester_agent.py",
-      "target": "pathlib",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_tester_agent.py",
-      "target": "unittest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_tester_agent.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_tester_agent.py",
-      "target": "orchid/tools/shell.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_tester_agent.py",
-      "target": "orchid/agents/base.py",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_tester_agent.py",
-      "target": "orchid/agents/tester.py",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_tester_agent.py",
-      "target": "orchid/memory/state.py",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_tester_agent.py",
-      "target": "orchid/orchestrator.py",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_tester_agent.py",
-      "target": "yaml",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_tools.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_tools.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_tools.py",
-      "target": "orchid/errors.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_tools.py",
-      "target": "orchid/tools/filesystem.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_tools.py",
-      "target": "orchid/tools/shell.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_trace.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_trace.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_trace.py",
-      "target": "unittest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_trace.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_trace.py",
-      "target": "orchid/orchestrator.py",
-      "weight": 5
-    },
-    {
-      "source": "tests/test_trace.py",
-      "target": "orchid/agents/base.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_trace.py",
-      "target": "orchid/session.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_utils.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_utils.py",
-      "target": "src/utils.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_vector_memory.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_vector_memory.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_vector_memory.py",
-      "target": "unittest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_vector_memory.py",
-      "target": "orchid/memory/vector.py",
-      "weight": 7
-    },
-    {
-      "source": "tests/test_vector_memory.py",
-      "target": "math",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_vector_memory.py",
-      "target": "builtins",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_vector_memory.py",
-      "target": "orchid/session.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_web.py",
-      "target": "__future__",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_web.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_web.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_web.py",
-      "target": "types",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_web.py",
-      "target": "typing",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_web.py",
-      "target": "unittest",
-      "weight": 2
-    },
-    {
-      "source": "tests/test_web.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_web.py",
-      "target": "fastapi",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_web.py",
-      "target": "orchid/interfaces/web_server.py",
-      "weight": 14
-    },
-    {
-      "source": "tests/test_web.py",
-      "target": "asyncio",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_web.py",
-      "target": "orchid/memory/state.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_web_v2.py",
-      "target": "json",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_web_v2.py",
-      "target": "pytest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_web_v2.py",
-      "target": "pathlib",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_web_v2.py",
-      "target": "unittest",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_web_v2.py",
-      "target": "fastapi",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_web_v2.py",
-      "target": "orchid/interfaces/web_server.py",
-      "weight": 1
-    },
-    {
-      "source": "tests/test_web_v2.py",
-      "target": "orchid/discussion.py",
-      "weight": 3
-    },
-    {
-      "source": "tests/test_web_v2.py",
-      "target": "orchid/lifecycle.py",
-      "weight": 1
+      "source": "frontend/vite.config.js",
+      "target": "@vitejs/plugin-react",
+      "weight": 1,
+      "kind": "imports"
     }
   ]
 }
