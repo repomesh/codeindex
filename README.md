@@ -170,10 +170,12 @@ codeindex serve --mcp
 
 | Tool | Description |
 |------|-------------|
-| `analyze_repo` | Build or refresh the index |
+| `analyze_repo` | Build or refresh the dependency index |
 | `get_impact` | Blast-radius report for a file |
 | `get_dependencies` | imports + imported-by for a file |
 | `get_high_blast_files` | All files above a blast score threshold |
+| `build_symbol_index` | Build or refresh the symbol index |
+| `lookup_symbol` | Find where any function/class/type is defined (file + line) |
 
 **Claude Code MCP config** (`.claude/settings.json`):
 

@@ -7,6 +7,7 @@ from pathlib import Path
 from codeindex.index import build, load, find_index, INDEX_FILENAME
 from codeindex.impact import compute_blast_radius
 from codeindex.reporter import format_markdown
+from codeindex.symbols import SYMBOL_INDEX_FILENAME
 
 TOOLS = [
     {
@@ -78,6 +79,46 @@ TOOLS = [
                     "description": "Path to codeindex.json. Auto-discovered if omitted.",
                 },
             },
+        },
+    },
+    {
+        "name": "lookup_symbol",
+        "description": (
+            "Find where a function, class, struct, or other symbol is defined. "
+            "Returns file path and line number via O(1) index lookup — no file scanning. "
+            "Requires symbolindex.json (run build_symbol_index first)."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Exact symbol name to look up.",
+                },
+                "symbol_index_path": {
+                    "type": "string",
+                    "description": "Path to symbolindex.json. Auto-discovered if omitted.",
+                },
+            },
+            "required": ["name"],
+        },
+    },
+    {
+        "name": "build_symbol_index",
+        "description": (
+            "Build or refresh the symbol index (symbolindex.json) for a repository. "
+            "Extracts every function, class, struct, and type with file and line number. "
+            "Run once after cloning or after major refactors, then use lookup_symbol."
+        ),
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "repo_path": {
+                    "type": "string",
+                    "description": "Absolute or relative path to the repo root.",
+                },
+            },
+            "required": ["repo_path"],
         },
     },
 ]
@@ -169,11 +210,69 @@ def _call_get_high_blast_files(params: dict) -> dict:
     return {"files": results, "count": len(results), "threshold": threshold}
 
 
+def _find_symbol_index(start: Path) -> Path | None:
+    for d in [start, *start.parents]:
+        p = d / SYMBOL_INDEX_FILENAME
+        if p.exists():
+            return p
+    return None
+
+
+def _resolve_symbol_index(symbol_index_path: str | None) -> dict:
+    if symbol_index_path:
+        p = Path(symbol_index_path)
+    else:
+        p = _find_symbol_index(Path.cwd())
+    if not p or not p.exists():
+        raise FileNotFoundError(
+            f"No {SYMBOL_INDEX_FILENAME} found. Run: codeindex symbols <repo>"
+        )
+    return json.loads(p.read_text())
+
+
+def _call_lookup_symbol(params: dict) -> dict:
+    sym_data = _resolve_symbol_index(params.get("symbol_index_path"))
+    name = params["name"]
+    matches = sym_data.get("symbols", {}).get(name, [])
+    if not matches:
+        return {"found": False, "name": name, "matches": []}
+    return {
+        "found": True,
+        "name": name,
+        "matches": [
+            {
+                "file":     m["file"],
+                "line":     m["line"],
+                "kind":     m.get("kind", "?"),
+                "exported": m.get("exported", True),
+                "methods":  m.get("methods", []),
+            }
+            for m in matches
+        ],
+    }
+
+
+def _call_build_symbol_index(params: dict) -> dict:
+    from codeindex.symbols import build_symbol_index as _build, write_standalone  # noqa: PLC0415
+    repo_path = params["repo_path"]
+    symbol_data = _build(repo_path)
+    out = Path(repo_path) / SYMBOL_INDEX_FILENAME
+    write_standalone(symbol_data, out)
+    return {
+        "success":       True,
+        "total_symbols": symbol_data["meta"]["total_symbols"],
+        "files":         len(symbol_data["file_symbols"]),
+        "output":        str(out),
+    }
+
+
 _HANDLERS = {
     "analyze_repo":        _call_analyze_repo,
     "get_impact":          _call_get_impact,
     "get_dependencies":    _call_get_dependencies,
     "get_high_blast_files": _call_get_high_blast_files,
+    "lookup_symbol":       _call_lookup_symbol,
+    "build_symbol_index":  _call_build_symbol_index,
 }
 
 
