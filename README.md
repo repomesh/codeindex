@@ -23,7 +23,7 @@ pip install codeindex
 Or from source:
 
 ```bash
-git clone https://github.com/scheidydudes/codeindex
+git clone https://github.com/scheidydude/codeindex
 cd codeindex
 pip install -e .
 ```
