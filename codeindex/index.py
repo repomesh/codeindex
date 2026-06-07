@@ -55,6 +55,32 @@ def _git_changed(root: Path, from_commit: str, to_commit: str) -> set:
         return set()
 
 
+def git_reachable(root: Path, ref: str) -> set:
+    """Return the set of commit hashes reachable from ref (for as-of queries)."""
+    try:
+        r = subprocess.run(
+            ["git", "log", "--format=%H", ref],
+            cwd=root, capture_output=True, text=True, timeout=60,
+        )
+        if r.returncode != 0:
+            return set()
+        return {line.strip() for line in r.stdout.splitlines() if line.strip()}
+    except Exception:
+        return set()
+
+
+def git_resolve(root: Path, ref: str) -> str | None:
+    """Resolve a ref (branch, tag, partial hash) to a full commit hash."""
+    try:
+        r = subprocess.run(
+            ["git", "rev-parse", ref],
+            cwd=root, capture_output=True, text=True, timeout=10,
+        )
+        return r.stdout.strip() if r.returncode == 0 else None
+    except Exception:
+        return None
+
+
 def _content_hash(root: Path, rel_path: str) -> str | None:
     p = root / rel_path
     try:

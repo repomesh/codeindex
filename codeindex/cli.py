@@ -62,10 +62,88 @@ def _cmd_analyze(args: argparse.Namespace) -> None:
 
 
 def _cmd_impact(args: argparse.Namespace) -> None:
-    from codeindex.index import load, find_index, INDEX_FILENAME
+    from codeindex.index import load, find_index, find_db, db_path_for, INDEX_FILENAME
+    from codeindex.index import git_reachable, git_resolve
     from codeindex.impact import compute_blast_radius
     from codeindex.reporter import format_stdout, format_markdown
 
+    as_of = getattr(args, "as_of", None)
+
+    if as_of:
+        # ── temporal path: query DB for historical blast radius ────────────────
+        from codeindex.store import Store
+
+        repo = Path(args.file).resolve().parent
+        db_path = find_db(repo) or find_db(Path.cwd())
+        if not db_path or not db_path.exists():
+            # Try discovering from cwd upward
+            db_path = find_db(Path.cwd())
+        if not db_path or not db_path.exists():
+            print("No .codeindex/index.db found — run: codeindex analyze <repo>", file=sys.stderr)
+            sys.exit(1)
+
+        # Resolve repo root from DB meta
+        store = Store(db_path)
+        repo_root_str = store.get_meta("repo_root")
+        repo_root = Path(repo_root_str) if repo_root_str else Path.cwd()
+
+        full_hash = git_resolve(repo_root, as_of)
+        if not full_hash:
+            print(f"Could not resolve ref: {as_of}", file=sys.stderr)
+            sys.exit(1)
+
+        reachable = git_reachable(repo_root, full_hash)
+        if not reachable:
+            print(f"No commits reachable from {as_of}", file=sys.stderr)
+            sys.exit(1)
+
+        # Resolve file_id (may be relative or absolute)
+        fp = args.file
+        clean = fp.lstrip("./")
+        all_paths = [
+            r[0] for r in store._conn.execute("SELECT path FROM files").fetchall()
+        ]
+        file_id = None
+        if fp in all_paths:
+            file_id = fp
+        else:
+            for p in all_paths:
+                if p.endswith(clean) or clean.endswith(p):
+                    file_id = p
+                    break
+
+        if not file_id:
+            print(f"File not found in index: {fp}", file=sys.stderr)
+            sys.exit(1)
+
+        blast = store.as_of_impact(file_id, reachable)
+        store.close()
+
+        if blast is None:
+            print(
+                f"No temporal data for {file_id} at {as_of}. "
+                "Run `codeindex history` to backfill, or `codeindex analyze` at each commit.",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+        total = len(all_paths)
+        if args.json:
+            print(json.dumps({
+                "file":                  file_id,
+                "as_of":                 as_of,
+                "blast_score":           blast["blast_score"],
+                "direct_dependents":     blast["direct_dependents"],
+                "transitive_dependents": blast["transitive_dependents"],
+                "direct_ids":            blast["direct_ids"],
+                "transitive_ids":        blast["transitive_ids"],
+            }, indent=2))
+        else:
+            print(f"[as-of {as_of[:12]}]  ", end="")
+            print(format_stdout(file_id, blast, total))
+        return
+
+    # ── current-HEAD path (unchanged) ─────────────────────────────────────────
     if args.index:
         index_path = Path(args.index)
     else:
@@ -82,7 +160,6 @@ def _cmd_impact(args: argparse.Namespace) -> None:
     data = load(index_path)
     node_ids = {n["id"] for n in data["nodes"]}
 
-    # Resolve file_id
     fp = args.file
     file_id = None
     if fp in node_ids:
@@ -283,6 +360,86 @@ def _cmd_db(args: argparse.Namespace) -> None:
         print(f"Schema at version {current} — no pending migrations.")
 
 
+def _cmd_history(args: argparse.Namespace) -> None:
+    from codeindex.index import find_db, db_path_for
+    from codeindex.store import Store
+    from codeindex.temporal import backfill
+
+    repo = Path(args.repo).resolve()
+    db_path = find_db(repo) or db_path_for(repo)
+    store = Store(db_path)
+    store.set_meta("repo_root", str(repo))
+    store._conn.commit()
+
+    max_commits = args.max_commits
+    processed, files = backfill(
+        root=repo,
+        store=store,
+        since=args.since,
+        max_commits=max_commits,
+    )
+    store.close()
+
+    if processed == 0:
+        print("Nothing to backfill.", file=sys.stderr)
+    elif getattr(args, "json", False):
+        print(json.dumps({"commits_processed": processed, "files_tracked": files}))
+
+
+def _cmd_changed_since(args: argparse.Namespace) -> None:
+    from codeindex.index import find_db, git_reachable, git_resolve
+    from codeindex.store import Store
+
+    db_path = Path(args.db) if getattr(args, "db", None) else find_db(Path.cwd())
+    if not db_path or not db_path.exists():
+        print("No .codeindex/index.db found — run: codeindex analyze <repo>", file=sys.stderr)
+        sys.exit(1)
+
+    repo = Path(args.repo).resolve() if getattr(args, "repo", None) else Path.cwd()
+    ref = args.ref
+
+    full_hash = git_resolve(repo, ref)
+    if not full_hash:
+        print(f"Could not resolve ref: {ref}", file=sys.stderr)
+        sys.exit(1)
+
+    reachable = git_reachable(repo, full_hash)
+    if not reachable:
+        print(f"No commits reachable from {ref}", file=sys.stderr)
+        sys.exit(1)
+
+    store = Store(db_path)
+    result = store.changed_since(reachable)
+    store.close()
+
+    if args.json:
+        print(json.dumps(result, indent=2))
+    else:
+        af = result["added_files"]
+        rf = result["removed_files"]
+        ae = result["added_edges"]
+        re_ = result["removed_edges"]
+        print(f"Changes since {ref[:12] if len(ref) > 12 else ref}:")
+        if af:
+            print(f"\n  Added files ({len(af)}):")
+            for f in af:
+                print(f"    + {f}")
+        if rf:
+            print(f"\n  Removed files ({len(rf)}):")
+            for f in rf:
+                print(f"    - {f}")
+        if ae:
+            print(f"\n  Added edges ({len(ae)}):")
+            for e in ae:
+                print(f"    + {e['source']} → {e['target']}  [{e['kind']}]")
+        if re_:
+            print(f"\n  Removed edges ({len(re_)}):")
+            for e in re_:
+                print(f"    - {e['source']} → {e['target']}  [{e['kind']}]")
+        if not any([af, rf, ae, re_]):
+            print("  (no changes detected)")
+
+
 def _cmd_install_hook(args: argparse.Namespace) -> None:
     from codeindex.hook import install
     install(
@@ -312,6 +469,8 @@ def _build_parser() -> argparse.ArgumentParser:
     p_impact.add_argument("--index", help="Path to codeindex.json (auto-discovered if omitted)")
     p_impact.add_argument("--out", help="Write markdown report to this file")
     p_impact.add_argument("--json", action="store_true", help="Output raw JSON")
+    p_impact.add_argument("--as-of", dest="as_of", metavar="REF",
+                          help="Compute blast radius at this historical commit/ref")
 
     # ── serve ──────────────────────────────────────────────────────────────
     p_serve = sub.add_parser("serve", help="Serve the visualization UI or run as MCP server")
@@ -376,6 +535,30 @@ def _build_parser() -> argparse.ArgumentParser:
     db_sub.add_parser("status", help="Show store schema version, last commit, and counts")
     db_sub.add_parser("migrate", help="Apply pending schema migrations")
 
+    # ── history ────────────────────────────────────────────────────────────────
+    p_hist = sub.add_parser(
+        "history",
+        help="Backfill temporal graph data from git history (no working-tree checkouts)",
+    )
+    p_hist.add_argument("repo", nargs="?", default=".", help="Repo root (default: .)")
+    p_hist.add_argument("--since", metavar="REF",
+                        help="Only process commits after this date/ref")
+    p_hist.add_argument(
+        "--max-commits", dest="max_commits", type=int, default=1000,
+        help="Maximum commits to process (default: 1000)",
+    )
+    p_hist.add_argument("--json", action="store_true", help="Output summary as JSON")
+
+    # ── changed-since ──────────────────────────────────────────────────────────
+    p_cs = sub.add_parser(
+        "changed-since",
+        help="List files/edges added or removed since a commit/ref",
+    )
+    p_cs.add_argument("ref", help="Commit hash, branch, or tag to compare against")
+    p_cs.add_argument("--repo", default=".", help="Repo root (default: .)")
+    p_cs.add_argument("--db", help="Path to index.db (auto-discovered if omitted)")
+    p_cs.add_argument("--json", action="store_true", help="Output raw JSON")
+
     # ── install-hook ───────────────────────────────────────────────────────
     p_hook = sub.add_parser("install-hook", help="Install a pre-commit hook for impact warnings")
     p_hook.add_argument("--repo", default=".", help="Repo root (default: .)")
@@ -398,8 +581,10 @@ def main() -> None:
         "lookup":       _cmd_lookup,
         "dependencies": _cmd_dependencies,
         "high-blast":   _cmd_high_blast,
-        "install-hook": _cmd_install_hook,
-        "db":           _cmd_db,
+        "install-hook":  _cmd_install_hook,
+        "db":            _cmd_db,
+        "history":       _cmd_history,
+        "changed-since": _cmd_changed_since,
     }
     dispatch[args.command](args)
 

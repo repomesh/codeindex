@@ -233,16 +233,18 @@ class Store:
             node_id_map[path] = fid
             seen_file_ids.append(fid)
 
-        # Soft-delete files absent from current graph
+        # Soft-delete files absent from current graph; record the commit where they disappeared
         if seen_file_ids:
             placeholders = ",".join("?" * len(seen_file_ids))
             self._conn.execute(
-                f"UPDATE files SET active=0, last_seen_at=? WHERE active=1 AND id NOT IN ({placeholders})",
-                [now] + seen_file_ids,
+                f"UPDATE files SET active=0, last_seen_commit=?, last_seen_at=?"
+                f" WHERE active=1 AND id NOT IN ({placeholders})",
+                [commit, now] + seen_file_ids,
             )
         else:
             self._conn.execute(
-                "UPDATE files SET active=0, last_seen_at=? WHERE active=1", (now,)
+                "UPDATE files SET active=0, last_seen_commit=?, last_seen_at=? WHERE active=1",
+                (commit, now),
             )
 
         # Sync edges: upsert current links, then soft-delete removed ones
@@ -283,12 +285,14 @@ class Store:
         if seen_edge_ids:
             placeholders = ",".join("?" * len(seen_edge_ids))
             self._conn.execute(
-                f"UPDATE edges SET active=0, last_seen_at=? WHERE active=1 AND id NOT IN ({placeholders})",
-                [now] + seen_edge_ids,
+                f"UPDATE edges SET active=0, last_seen_commit=?, last_seen_at=?"
+                f" WHERE active=1 AND id NOT IN ({placeholders})",
+                [commit, now] + seen_edge_ids,
             )
         else:
             self._conn.execute(
-                "UPDATE edges SET active=0, last_seen_at=? WHERE active=1", (now,)
+                "UPDATE edges SET active=0, last_seen_commit=?, last_seen_at=? WHERE active=1",
+                (commit, now),
             )
 
         self._conn.commit()
@@ -384,6 +388,205 @@ class Store:
             pass  # FTS5 not available on this build
 
         self._conn.commit()
+
+    # ── temporal ──────────────────────────────────────────────────────────────
+
+    def record_commit(self, commit: dict) -> None:
+        """Insert a commit record (idempotent)."""
+        self._conn.execute(
+            """INSERT OR IGNORE INTO commits(
+                hash, authored_at, committed_at, author, message, parent_hash
+            ) VALUES (?,?,?,?,?,?)""",
+            (
+                commit.get("hash"),
+                commit.get("authored_at"),
+                commit.get("committed_at"),
+                commit.get("author"),
+                commit.get("message"),
+                commit.get("parent_hash"),
+            ),
+        )
+
+    def apply_file_temporal(
+        self,
+        file_first_seen: dict,
+        file_last_seen_alive: dict,
+    ) -> None:
+        """Bulk-update first_seen_commit on files from history backfill.
+
+        Only sets first_seen_commit where it is currently NULL — we never
+        overwrite a value already recorded by analyze().  last_seen_commit for
+        active files is left alone; for files absent from the current HEAD that
+        we find in backfill, we insert a skeleton row.
+        """
+        now = _now()
+        for path, first_hash in file_first_seen.items():
+            # Insert skeleton if the file has never been seen by analyze()
+            self._conn.execute(
+                """INSERT OR IGNORE INTO files(
+                    path, active, first_seen_commit, first_seen_at, last_seen_at
+                ) VALUES (?,0,?,?,?)""",
+                (path, first_hash, now, now),
+            )
+            # Set first_seen_commit only if NULL (preserve analyze() value)
+            self._conn.execute(
+                "UPDATE files SET first_seen_commit=? WHERE path=? AND first_seen_commit IS NULL",
+                (first_hash, path),
+            )
+        self._conn.commit()
+
+    def apply_edge_temporal(
+        self,
+        edge_first_seen: dict,
+        edge_last_seen_alive: dict,
+    ) -> None:
+        """Bulk-update first_seen_commit on edges from history backfill.
+
+        Edges are identified by (source_path, target_path, kind).  Only sets
+        first_seen_commit where NULL; does not overwrite existing values.
+        """
+        now = _now()
+        for (src_path, tgt_path, kind), first_hash in edge_first_seen.items():
+            src_row = self._conn.execute(
+                "SELECT id FROM files WHERE path=?", (src_path,)
+            ).fetchone()
+            tgt_row = self._conn.execute(
+                "SELECT id FROM files WHERE path=?", (tgt_path,)
+            ).fetchone()
+            if not src_row or not tgt_row:
+                continue
+            s_fid, t_fid = src_row[0], tgt_row[0]
+
+            self._conn.execute(
+                """INSERT OR IGNORE INTO edges(
+                    source_file_id, target_file_id, kind, weight, active,
+                    first_seen_commit, first_seen_at, last_seen_at
+                ) VALUES (?,?,?,1,0,?,?,?)""",
+                (s_fid, t_fid, kind, first_hash, now, now),
+            )
+            self._conn.execute(
+                """UPDATE edges SET first_seen_commit=?
+                   WHERE source_file_id=? AND target_file_id=? AND kind=?
+                   AND first_seen_commit IS NULL""",
+                (first_hash, s_fid, t_fid, kind),
+            )
+        self._conn.commit()
+
+    def _populate_reachable_temp(self, reachable: set) -> None:
+        """Populate _reachable temp table for as-of / changed-since queries."""
+        self._conn.execute(
+            "CREATE TEMP TABLE IF NOT EXISTS _reachable(hash TEXT PRIMARY KEY)"
+        )
+        self._conn.execute("DELETE FROM _reachable")
+        self._conn.executemany(
+            "INSERT OR IGNORE INTO _reachable(hash) VALUES(?)",
+            [(h,) for h in reachable],
+        )
+
+    def as_of_impact(self, file_path: str, reachable: set) -> dict | None:
+        """Compute blast radius for file_path at the historical point defined by reachable.
+
+        *reachable* is the set of commit hashes reachable from the --as-of ref,
+        obtained via `git log --format=%H <ref>`.
+        Returns None if no temporal data is available.
+        """
+        from codeindex.impact import compute_blast_radius  # avoid circular at module level
+
+        self._populate_reachable_temp(reachable)
+
+        # Files active at this historical point:
+        # first_seen in reachable AND (still active at HEAD OR removed after ref)
+        file_rows = self._conn.execute("""
+            SELECT id, path FROM files
+            WHERE first_seen_commit IN (SELECT hash FROM _reachable)
+            AND (
+                active = 1
+                OR (active = 0
+                    AND last_seen_commit IS NOT NULL
+                    AND last_seen_commit NOT IN (SELECT hash FROM _reachable))
+            )
+        """).fetchall()
+
+        if not file_rows:
+            return None
+
+        nodes = [{"id": r[1]} for r in file_rows]
+        file_id_set = {r[0] for r in file_rows}
+
+        # Edges active at this historical point
+        edge_rows = self._conn.execute("""
+            SELECT f1.path, f2.path
+            FROM edges e
+            JOIN files f1 ON e.source_file_id = f1.id
+            JOIN files f2 ON e.target_file_id = f2.id
+            WHERE e.first_seen_commit IN (SELECT hash FROM _reachable)
+            AND (
+                e.active = 1
+                OR (e.active = 0
+                    AND e.last_seen_commit IS NOT NULL
+                    AND e.last_seen_commit NOT IN (SELECT hash FROM _reachable))
+            )
+        """).fetchall()
+
+        links = [{"source": r[0], "target": r[1]} for r in edge_rows]
+
+        blast_map = compute_blast_radius(nodes, links)
+        return blast_map.get(file_path)
+
+    def changed_since(self, reachable: set) -> dict:
+        """List files/edges added or removed since the historical point defined by reachable."""
+        self._populate_reachable_temp(reachable)
+
+        added_files = [
+            r[0] for r in self._conn.execute("""
+                SELECT path FROM files
+                WHERE active = 1
+                AND first_seen_commit IS NOT NULL
+                AND first_seen_commit NOT IN (SELECT hash FROM _reachable)
+            """).fetchall()
+        ]
+
+        removed_files = [
+            r[0] for r in self._conn.execute("""
+                SELECT path FROM files
+                WHERE active = 0
+                AND last_seen_commit IS NOT NULL
+                AND last_seen_commit NOT IN (SELECT hash FROM _reachable)
+            """).fetchall()
+        ]
+
+        added_edges = [
+            {"source": r[0], "target": r[1], "kind": r[2]}
+            for r in self._conn.execute("""
+                SELECT f1.path, f2.path, e.kind
+                FROM edges e
+                JOIN files f1 ON e.source_file_id = f1.id
+                JOIN files f2 ON e.target_file_id = f2.id
+                WHERE e.active = 1
+                AND e.first_seen_commit IS NOT NULL
+                AND e.first_seen_commit NOT IN (SELECT hash FROM _reachable)
+            """).fetchall()
+        ]
+
+        removed_edges = [
+            {"source": r[0], "target": r[1], "kind": r[2]}
+            for r in self._conn.execute("""
+                SELECT f1.path, f2.path, e.kind
+                FROM edges e
+                JOIN files f1 ON e.source_file_id = f1.id
+                JOIN files f2 ON e.target_file_id = f2.id
+                WHERE e.active = 0
+                AND e.last_seen_commit IS NOT NULL
+                AND e.last_seen_commit NOT IN (SELECT hash FROM _reachable)
+            """).fetchall()
+        ]
+
+        return {
+            "added_files":   added_files,
+            "removed_files": removed_files,
+            "added_edges":   added_edges,
+            "removed_edges": removed_edges,
+        }
 
     # ── status ────────────────────────────────────────────────────────────────
 
