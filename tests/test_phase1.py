@@ -109,7 +109,7 @@ def test_db_populated(tmp_path: Path) -> None:
         f"expected {expected_files}"
     )
     assert status["active_edges"] >= 0
-    assert status["schema_version"] == "1"
+    assert status["schema_version"] == "2"
 
 
 # ── Test 3: incremental detection logs changed file ──────────────────────────

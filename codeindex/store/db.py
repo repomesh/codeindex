@@ -7,11 +7,21 @@ codeindex.semantic. The dependency arrow points only upward into this layer.
 """
 from __future__ import annotations
 
+import struct
 import sqlite3
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-SCHEMA_VERSION = "1"
+SCHEMA_VERSION = "2"
+
+# sqlite-vec is an optional C extension; absence is a graceful degradation, not an error.
+try:
+    import sqlite_vec as _sqlite_vec
+    _HAS_SQLITE_VEC = True
+except ImportError:
+    _sqlite_vec = None  # type: ignore[assignment]
+    _HAS_SQLITE_VEC = False
 
 _DDL = """
 CREATE TABLE IF NOT EXISTS index_meta (
@@ -114,7 +124,10 @@ class Store:
         self._conn.row_factory = sqlite3.Row
         self._conn.execute("PRAGMA journal_mode=WAL")
         self._conn.execute("PRAGMA foreign_keys=ON")
+        self._has_vec = False
+        self._vec_dims: int | None = None
         self._apply_schema()
+        self._maybe_load_vec()
 
     # ── schema ────────────────────────────────────────────────────────────────
 
@@ -128,7 +141,32 @@ class Store:
         existing = self.get_meta("schema_version")
         if existing is None:
             self.set_meta("schema_version", SCHEMA_VERSION)
+        elif existing != SCHEMA_VERSION:
+            self._migrate(existing)
         self._conn.commit()
+
+    def _migrate(self, from_version: str) -> None:
+        """Apply forward migrations. vec_symbols is created on demand via init_vectors()."""
+        if from_version == "1":
+            self.set_meta("schema_version", "2")
+        self._conn.commit()
+
+    def _maybe_load_vec(self) -> None:
+        """Load sqlite-vec and activate vec_symbols if previously initialized."""
+        if not _HAS_SQLITE_VEC:
+            return
+        dims_str = self.get_meta("embedding_dims")
+        if not dims_str:
+            return
+        try:
+            self._conn.enable_load_extension(True)
+            _sqlite_vec.load(self._conn)
+            self._conn.enable_load_extension(False)
+            self._vec_dims = int(dims_str)
+            self._has_vec = True
+        except Exception as exc:
+            print(f"[codeindex] sqlite-vec load failed: {exc}", file=sys.stderr)
+            self._has_vec = False
 
     # ── meta ──────────────────────────────────────────────────────────────────
 
@@ -375,13 +413,13 @@ class Store:
                 "UPDATE symbols SET active=0, last_seen_at=? WHERE active=1", (now,)
             )
 
-        # Refresh FTS index: clear and repopulate from active symbols.
-        # Uses a standalone (non-content) FTS5 table so DELETE works normally.
+        # Refresh FTS: repopulate with explicit rowid = symbol id so FTS rowid → symbols.id.
+        # Uses standalone FTS5 table (no content=) — DELETE works normally in WAL mode.
         try:
             self._conn.execute("DELETE FROM symbols_fts")
             self._conn.execute(
-                """INSERT INTO symbols_fts(name, doc, signature)
-                   SELECT name, COALESCE(doc,''), COALESCE(signature,'')
+                """INSERT INTO symbols_fts(rowid, name, doc, signature)
+                   SELECT id, name, COALESCE(doc,''), COALESCE(signature,'')
                    FROM symbols WHERE active=1"""
             )
         except sqlite3.OperationalError:
@@ -588,6 +626,187 @@ class Store:
             "removed_edges": removed_edges,
         }
 
+    # ── semantic / vector ─────────────────────────────────────────────────────
+
+    def init_vectors(self, dims: int) -> bool:
+        """Create vec_symbols virtual table (sqlite-vec required).
+
+        Safe to call multiple times; uses CREATE VIRTUAL TABLE IF NOT EXISTS.
+        Returns True if the table is ready, False if sqlite-vec is unavailable.
+        """
+        if not _HAS_SQLITE_VEC:
+            print(
+                "[codeindex] sqlite-vec not installed — semantic search unavailable. "
+                "Install with: pip install 'codeindex[semantic]'",
+                file=sys.stderr,
+            )
+            return False
+        try:
+            if not self._has_vec:
+                self._conn.enable_load_extension(True)
+                _sqlite_vec.load(self._conn)
+                self._conn.enable_load_extension(False)
+            # DDL must be a string literal with dims baked in
+            self._conn.executescript(
+                f"CREATE VIRTUAL TABLE IF NOT EXISTS vec_symbols USING vec0("
+                f"symbol_id INTEGER PRIMARY KEY, embedding FLOAT[{dims}]);"
+            )
+            self._vec_dims = dims
+            self._has_vec = True
+            self.set_meta("embedding_dims", str(dims))
+            self._conn.commit()
+            return True
+        except Exception as exc:
+            print(f"[codeindex] sqlite-vec init failed: {exc}", file=sys.stderr)
+            self._has_vec = False
+            return False
+
+    def upsert_embeddings(self, vecs: list[tuple[int, list[float]]]) -> None:
+        """Store embeddings for symbol IDs into vec_symbols.
+
+        *vecs* is a list of (symbol_id, float_list) pairs.
+        Silently no-ops if vec_symbols is not initialized.
+        """
+        if not self._has_vec or not vecs:
+            return
+        for sid, vec in vecs:
+            blob = struct.pack(f"{len(vec)}f", *vec)
+            self._conn.execute(
+                "INSERT OR REPLACE INTO vec_symbols(symbol_id, embedding) VALUES (?, ?)",
+                (sid, blob),
+            )
+        self._conn.commit()
+
+    def semantic_search(self, query_vec: list[float], k: int) -> list[int]:
+        """KNN search over vec_symbols. Returns symbol IDs ordered by distance.
+
+        Caller must check _has_vec before calling.
+        """
+        blob = struct.pack(f"{len(query_vec)}f", *query_vec)
+        rows = self._conn.execute(
+            "SELECT symbol_id, distance FROM vec_symbols "
+            "WHERE embedding MATCH ? ORDER BY distance LIMIT ?",
+            (blob, k),
+        ).fetchall()
+        return [r[0] for r in rows]
+
+    def fts_search(self, query: str, k: int) -> list[int]:
+        """Full-text search over symbols_fts. Returns symbol IDs ordered by relevance.
+
+        The FTS rowid equals symbols.id (set explicitly in sync_symbols).
+        Returns empty list if FTS is unavailable or the query is empty.
+        """
+        if not query.strip():
+            return []
+        try:
+            rows = self._conn.execute(
+                "SELECT rowid FROM symbols_fts WHERE symbols_fts MATCH ? "
+                "ORDER BY rank LIMIT ?",
+                (query, k),
+            ).fetchall()
+            return [r[0] for r in rows]
+        except sqlite3.OperationalError:
+            return []
+
+    def graph_expand(self, symbol_ids: list[int], k: int) -> list[int]:
+        """Return symbol IDs from files structurally adjacent to the given symbols.
+
+        Finds files that import or are imported by the files containing the input
+        symbols, then returns active symbols from those related files (excluding
+        symbols already in symbol_ids).
+        """
+        if not symbol_ids:
+            return []
+        ph = ",".join("?" * len(symbol_ids))
+        file_rows = self._conn.execute(
+            f"SELECT DISTINCT file_id FROM symbols WHERE id IN ({ph}) AND active=1",
+            symbol_ids,
+        ).fetchall()
+        if not file_rows:
+            return []
+        file_ids = [r[0] for r in file_rows]
+        fph = ",".join("?" * len(file_ids))
+        related = self._conn.execute(
+            f"""SELECT DISTINCT fid FROM (
+                SELECT source_file_id AS fid FROM edges
+                WHERE target_file_id IN ({fph}) AND active=1
+                UNION
+                SELECT target_file_id AS fid FROM edges
+                WHERE source_file_id IN ({fph}) AND active=1
+            ) WHERE fid NOT IN ({fph})""",
+            file_ids + file_ids + file_ids,
+        ).fetchall()
+        if not related:
+            return []
+        related_ids = [r[0] for r in related]
+        rph = ",".join("?" * len(related_ids))
+        eph = ",".join("?" * len(symbol_ids))
+        sym_rows = self._conn.execute(
+            f"SELECT id FROM symbols WHERE file_id IN ({rph}) AND active=1 "
+            f"AND id NOT IN ({eph}) LIMIT ?",
+            related_ids + symbol_ids + [k],
+        ).fetchall()
+        return [r[0] for r in sym_rows]
+
+    def symbol_visible_at(self, symbol_id: int, reachable: set) -> bool:
+        """Return True if the symbol was present at the historical point given by reachable."""
+        row = self._conn.execute(
+            "SELECT first_seen_commit, last_seen_commit, active FROM symbols WHERE id=?",
+            (symbol_id,),
+        ).fetchone()
+        if not row:
+            return False
+        first, last, active = row[0], row[1], row[2]
+        if first and first not in reachable:
+            return False
+        if active == 0 and last and last not in reachable:
+            return False
+        return True
+
+    def get_symbol(self, symbol_id: int) -> dict | None:
+        """Return symbol metadata dict or None if not found."""
+        row = self._conn.execute(
+            """SELECT s.id, s.name, s.kind, s.line, s.exported, s.signature, s.doc,
+                      f.path AS file, f.blast_score
+               FROM symbols s
+               JOIN files f ON s.file_id = f.id
+               WHERE s.id = ?""",
+            (symbol_id,),
+        ).fetchone()
+        if not row:
+            return None
+        return {
+            "id":          row["id"],
+            "name":        row["name"],
+            "kind":        row["kind"],
+            "line":        row["line"],
+            "exported":    bool(row["exported"]),
+            "signature":   row["signature"],
+            "doc":         row["doc"],
+            "file":        row["file"],
+            "blast_score": row["blast_score"],
+        }
+
+    def symbols_needing_embeddings(self) -> list[tuple[int, str]]:
+        """Return (symbol_id, text) pairs for active symbols without a vec_symbols entry.
+
+        Text is `name + ' ' + signature + ' ' + doc` (empty parts omitted).
+        Used by index.py to embed only new/changed symbols incrementally.
+        """
+        if not self._has_vec:
+            return []
+        rows = self._conn.execute(
+            """SELECT s.id, s.name, COALESCE(s.signature,''), COALESCE(s.doc,'')
+               FROM symbols s
+               LEFT JOIN vec_symbols v ON v.symbol_id = s.id
+               WHERE s.active=1 AND v.symbol_id IS NULL"""
+        ).fetchall()
+        result = []
+        for r in rows:
+            parts = [p for p in [r[1], r[2], r[3]] if p]
+            result.append((r[0], " ".join(parts)))
+        return result
+
     # ── status ────────────────────────────────────────────────────────────────
 
     def status(self) -> dict:
@@ -605,6 +824,9 @@ class Store:
             "active_symbols":      self._conn.execute(
                 "SELECT COUNT(*) FROM symbols WHERE active=1"
             ).fetchone()[0],
+            "embedding_model":     self.get_meta("embedding_model") or "none",
+            "embedding_dims":      self.get_meta("embedding_dims") or "none",
+            "vec_symbols":         "enabled" if self._has_vec else "disabled",
         }
 
     # ── close ─────────────────────────────────────────────────────────────────

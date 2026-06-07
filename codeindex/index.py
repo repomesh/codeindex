@@ -89,6 +89,44 @@ def _content_hash(root: Path, rel_path: str) -> str | None:
         return None
 
 
+def _embed_new_symbols(store) -> None:
+    """Embed symbols that lack a vector entry, if an embedding endpoint is configured.
+
+    Reads CODEINDEX_EMBEDDING_ENDPOINT / _MODEL / _DIMS from env.
+    Silently skips if any required env var is missing or if the call fails.
+    """
+    import os
+    endpoint = os.environ.get("CODEINDEX_EMBEDDING_ENDPOINT", "")
+    model = os.environ.get("CODEINDEX_EMBEDDING_MODEL", "")
+    dims_str = os.environ.get("CODEINDEX_EMBEDDING_DIMS", "")
+    if not (endpoint and model and dims_str):
+        return
+    try:
+        dims = int(dims_str)
+    except ValueError:
+        return
+
+    if not store.init_vectors(dims):
+        return
+
+    pairs = store.symbols_needing_embeddings()
+    if not pairs:
+        return
+
+    try:
+        from codeindex.semantic.provider import OpenAIEmbeddingProvider
+        provider = OpenAIEmbeddingProvider(endpoint=endpoint, model=model, dims=dims)
+        ids = [p[0] for p in pairs]
+        texts = [p[1] for p in pairs]
+        vecs = provider.embed(texts)
+        store.upsert_embeddings(list(zip(ids, vecs)))
+        store.set_meta("embedding_model", model)
+        store._conn.commit()
+        print(f"Embedded {len(ids)} symbol(s)", file=sys.stderr)
+    except Exception as exc:
+        print(f"Warning: embedding failed: {exc}", file=sys.stderr)
+
+
 def build(repo_path: str, output: Path | None = None) -> dict:
     root = Path(repo_path).resolve()
     data = analyze(str(root))
@@ -134,6 +172,9 @@ def build(repo_path: str, output: Path | None = None) -> dict:
         store.sync_symbols(symbol_data, commit=head_commit)
     except Exception as exc:
         print(f"Warning: symbol sync failed: {exc}", file=sys.stderr)
+
+    # Embed new symbols if an embedding endpoint is configured
+    _embed_new_symbols(store)
 
     store.close()
 

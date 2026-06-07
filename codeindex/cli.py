@@ -440,6 +440,66 @@ def _cmd_changed_since(args: argparse.Namespace) -> None:
             print("  (no changes detected)")
 
 
+def _cmd_search(args: argparse.Namespace) -> None:
+    from codeindex.index import find_db, git_reachable, git_resolve
+    from codeindex.store import Store
+    from codeindex.semantic.search import hybrid_search
+
+    db_path = Path(args.db) if getattr(args, "db", None) else find_db(Path.cwd())
+    if not db_path or not db_path.exists():
+        print("No .codeindex/index.db found — run: codeindex analyze <repo>", file=sys.stderr)
+        sys.exit(1)
+
+    store = Store(db_path)
+
+    provider = None
+    import os
+    endpoint = os.environ.get("CODEINDEX_EMBEDDING_ENDPOINT", "")
+    model = os.environ.get("CODEINDEX_EMBEDDING_MODEL", "")
+    dims_str = os.environ.get("CODEINDEX_EMBEDDING_DIMS", "")
+    if endpoint and model and dims_str:
+        try:
+            dims = int(dims_str)
+            from codeindex.semantic.provider import OpenAIEmbeddingProvider
+            provider = OpenAIEmbeddingProvider(endpoint=endpoint, model=model, dims=dims)
+        except Exception:
+            pass
+
+    as_of_reachable = None
+    as_of = getattr(args, "as_of", None)
+    if as_of:
+        repo_root_str = store.get_meta("repo_root")
+        repo_root = Path(repo_root_str) if repo_root_str else Path.cwd()
+        full_hash = git_resolve(repo_root, as_of)
+        if not full_hash:
+            print(f"Could not resolve ref: {as_of}", file=sys.stderr)
+            store.close()
+            sys.exit(1)
+        as_of_reachable = git_reachable(repo_root, full_hash)
+
+    results = hybrid_search(
+        store=store,
+        query=args.query,
+        k=args.k,
+        as_of_reachable=as_of_reachable,
+        provider=provider,
+    )
+    store.close()
+
+    if args.json:
+        print(json.dumps(results, indent=2))
+    else:
+        if not results:
+            print("No results found.")
+            return
+        for r in results:
+            sig = f"  {r['signature']}" if r.get("signature") else ""
+            print(f"{r['file']}:{r['line']}  {r['name']}  ({r.get('kind', '?')}){sig}")
+            if r.get("doc"):
+                print(f"    {r['doc'][:120]}")
+            print(f"    signals: {', '.join(r['signals'])}  score: {r['rrf_score']}")
+
+
 def _cmd_install_hook(args: argparse.Namespace) -> None:
     from codeindex.hook import install
     install(
@@ -559,6 +619,20 @@ def _build_parser() -> argparse.ArgumentParser:
     p_cs.add_argument("--db", help="Path to index.db (auto-discovered if omitted)")
     p_cs.add_argument("--json", action="store_true", help="Output raw JSON")
 
+    # ── search ─────────────────────────────────────────────────────────────────
+    p_search = sub.add_parser(
+        "search",
+        help="Hybrid semantic + keyword + graph symbol search",
+    )
+    p_search.add_argument("query", help="Natural-language or keyword query")
+    p_search.add_argument("--k", type=int, default=10, help="Number of results (default: 10)")
+    p_search.add_argument(
+        "--as-of", dest="as_of", metavar="REF",
+        help="Restrict results to symbols visible at this commit/ref",
+    )
+    p_search.add_argument("--db", help="Path to index.db (auto-discovered if omitted)")
+    p_search.add_argument("--json", action="store_true", help="Output raw JSON")
+
     # ── install-hook ───────────────────────────────────────────────────────
     p_hook = sub.add_parser("install-hook", help="Install a pre-commit hook for impact warnings")
     p_hook.add_argument("--repo", default=".", help="Repo root (default: .)")
@@ -585,6 +659,7 @@ def main() -> None:
         "db":            _cmd_db,
         "history":       _cmd_history,
         "changed-since": _cmd_changed_since,
+        "search":        _cmd_search,
     }
     dispatch[args.command](args)
 
