@@ -17,7 +17,16 @@
       "Bash(cp /Users/david/Development/scheidydudes-github-repos/repo-vizualizer/analyzers/*.py /Users/david/Development/scheidydudes-github-repos/repo-vizualizer/codeindex/analyzers/)",
       "Bash(cp /Users/david/Development/scheidydudes-github-repos/repo-vizualizer/repo-viz-explorer.html /Users/david/Development/scheidydudes-github-repos/repo-vizualizer/viz/explorer.html)",
       "Bash(pip install *)",
-      "Bash(codeindex *)"
+      "Bash(codeindex *)",
+      "Bash(xargs basename -s .py)",
+      "Bash(grep -E \"\\\\.\\(py|toml|txt|cfg\\)$\")",
+      "Bash(pip show *)",
+      "Bash(uv venv *)",
+      "Bash(uv pip *)",
+      "Bash(.venv/bin/pytest *)",
+      "Bash(.venv/bin/codeindex analyze *)",
+      "Bash(.venv/bin/python3 *)",
+      "Bash(.venv/bin/codeindex db *)"
     ]
   }
 }
