@@ -290,9 +290,21 @@ def _cmd_lookup(args: argparse.Namespace) -> None:
     if args.json:
         print(json.dumps({"name": name, "matches": matches}, indent=2))
     else:
+        repo_root = index_path.parent if index_path else Path.cwd()
         for m in matches:
             methods = f"  methods: {', '.join(m['methods'])}" if m.get("methods") else ""
             print(f"{m['file']}:{m['line']}  {name}  ({m.get('kind', '?')}){methods}")
+            # Print a short snippet around the definition
+            src = repo_root / m["file"]
+            if src.exists():
+                lines = src.read_text(errors="replace").splitlines()
+                start = max(0, m["line"] - 1)
+                end = min(len(lines), m["line"] + 4)
+                print()
+                for i, ln in enumerate(lines[start:end], start=start + 1):
+                    marker = ">" if i == m["line"] else " "
+                    print(f"  {marker} {i:4d} | {ln}")
+                print()
 
 
 def _cmd_dependencies(args: argparse.Namespace) -> None:

@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.4] - 2026-06-07
+
+### Fixed
+
+- **`lookup` shows code snippet** — plain-mode output now prints 5 lines of source context
+  around the definition (with `>` marker on the definition line), making `lookup` useful
+  without needing to open the file separately.
+
 ## [0.3.3] - 2026-06-07
 
 ### Fixed
