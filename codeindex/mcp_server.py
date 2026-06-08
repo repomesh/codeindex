@@ -316,6 +316,7 @@ def _call_get_high_blast_files(params: dict) -> dict:
         {
             "file":       n["id"],
             "blast_score": n.get("blast_score", 0),
+            "loc":        n.get("loc", 0),
             "direct":     n.get("direct_dependents", 0),
             "transitive": n.get("transitive_dependents", 0),
         }
@@ -587,6 +588,7 @@ def _call_changed_since(params: dict) -> dict:
         return {"error": f"No commits reachable from {ref}"}
 
     result = store.changed_since(reachable)
+    last_indexed = store.get_meta("last_indexed_commit") or ""
     store.close()
     result["ref"] = ref
 
@@ -600,11 +602,20 @@ def _call_changed_since(params: dict) -> dict:
     touched = added_set | removed_set | set(result["modified_files"])
     all_ae = result["added_edges"]
     all_re = result["removed_edges"]
-    result["added_edges"]   = [e for e in all_ae if e["source"] in touched or e["target"] in touched]
-    result["removed_edges"] = [e for e in all_re if e["source"] in touched or e["target"] in touched]
-    suppressed = (len(all_ae) - len(result["added_edges"])) + (len(all_re) - len(result["removed_edges"]))
+    ae_filtered = [e for e in all_ae if e["source"] in touched or e["target"] in touched]
+    re_filtered = [e for e in all_re if e["source"] in touched or e["target"] in touched]
+    result["added_edges"]   = ae_filtered
+    result["removed_edges"] = re_filtered
+    suppressed = (len(all_ae) - len(ae_filtered)) + (len(all_re) - len(re_filtered))
     if suppressed:
         result["suppressed_edge_count"] = suppressed
+
+    analyze_origin_count = sum(
+        1 for e in ae_filtered
+        if last_indexed and e.get("first_seen_commit") == last_indexed
+    )
+    if analyze_origin_count:
+        result["analyze_origin_edge_count"] = analyze_origin_count
 
     return result
 

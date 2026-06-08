@@ -641,9 +641,9 @@ class Store:
         ]
 
         added_edges = [
-            {"source": r[0], "target": r[1], "kind": r[2]}
+            {"source": r[0], "target": r[1], "kind": r[2], "first_seen_commit": r[3]}
             for r in self._conn.execute(f"""
-                SELECT f1.path, f2.path, e.kind
+                SELECT f1.path, f2.path, e.kind, e.first_seen_commit
                 FROM edges e
                 JOIN files f1 ON e.source_file_id = f1.id
                 JOIN files f2 ON e.target_file_id = f2.id

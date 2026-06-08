@@ -292,7 +292,7 @@ def _cmd_lookup(args: argparse.Namespace) -> None:
     else:
         for m in matches:
             methods = f"  methods: {', '.join(m['methods'])}" if m.get("methods") else ""
-            print(f"{m['file']}:{m['line']}  ({m.get('kind', '?')}){methods}")
+            print(f"{m['file']}:{m['line']}  {name}  ({m.get('kind', '?')}){methods}")
 
 
 def _cmd_dependencies(args: argparse.Namespace) -> None:
@@ -353,14 +353,17 @@ def _cmd_high_blast(args: argparse.Namespace) -> None:
     if args.json:
         print(json.dumps({"threshold": threshold, "count": len(results), "files": [
             {"file": n["id"], "blast_score": n["blast_score"],
+             "loc": n.get("loc", 0),
              "direct": n.get("direct_dependents", 0), "transitive": n.get("transitive_dependents", 0)}
             for n in results
         ]}, indent=2))
     else:
         print(f"Files with blast score ≥ {threshold}  ({len(results)} found)\n")
         for n in results:
+            loc = n.get("loc", 0)
+            loc_str = f"  {loc} loc" if loc else ""
             print(f"  {n['blast_score']:>6.1f}  {n['id']}"
-                  f"  ({n.get('direct_dependents', 0)}d / {n.get('transitive_dependents', 0)}t)")
+                  f"  ({n.get('direct_dependents', 0)}d / {n.get('transitive_dependents', 0)}t){loc_str}")
 
 
 def _cmd_db(args: argparse.Namespace) -> None:
@@ -446,6 +449,7 @@ def _cmd_changed_since(args: argparse.Namespace) -> None:
 
     store = Store(db_path)
     result = store.changed_since(reachable)
+    last_indexed = store.get_meta("last_indexed_commit") or ""
     store.close()
 
     # Augment with content-modified files from git (files that changed but weren't added/removed)
@@ -465,6 +469,13 @@ def _cmd_changed_since(args: argparse.Namespace) -> None:
     suppressed = (len(all_ae) - len(ae_filtered)) + (len(all_re) - len(re_filtered))
     if suppressed:
         result["suppressed_edge_count"] = suppressed
+
+    # Count added edges whose first_seen_commit matches last analyze HEAD —
+    # these may be initial-indexing artifacts rather than genuine new coupling.
+    analyze_origin_count = sum(
+        1 for e in ae_filtered
+        if last_indexed and e.get("first_seen_commit") == last_indexed
+    )
 
     if args.json:
         print(json.dumps(result, indent=2))
@@ -500,6 +511,9 @@ def _cmd_changed_since(args: argparse.Namespace) -> None:
                 print(f"    - {e['source']} → {e['target']}  [{e['kind']}]")
         if suppressed:
             print(f"\n  ({suppressed} unrelated edge changes omitted — run with --json to see all)")
+        if analyze_origin_count and ae:
+            print(f"\n  ({analyze_origin_count} of {len(ae)} added edge(s) first seen at last-analyzed HEAD"
+                  f" — may be initial-indexing artifacts; run `codeindex history` to backfill)")
         if not any([mf, af, rf, ae, re_]):
             print("  (no changes detected)")
 
