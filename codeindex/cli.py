@@ -247,10 +247,43 @@ def _cmd_symbols(args: argparse.Namespace) -> None:
 
 
 def _cmd_lookup(args: argparse.Namespace) -> None:
-    from codeindex.mcp_server import _find_symbol_index, _resolve_symbol_index
-    sym_data = _resolve_symbol_index(args.index)
+    from codeindex.index import db_path_for, find_index, INDEX_FILENAME
+    from codeindex.store import Store
+
     name = args.name
-    matches = sym_data.get("symbols", {}).get(name, [])
+    matches = []
+
+    # Prefer SQLite DB (same data source as `search`)
+    index_path = find_index(Path.cwd())
+    if index_path:
+        db_path = db_path_for(index_path.parent)
+        if db_path.exists():
+            store = Store(db_path)
+            rows = store.lookup_by_name(name)
+            store.close()
+            matches = [
+                {
+                    "file":     r["file"],
+                    "line":     r["line"],
+                    "kind":     r["kind"],
+                    "exported": r["exported"],
+                }
+                for r in rows
+            ]
+
+    # Fall back to symbolindex.json when DB not available
+    if not matches and not args.index:
+        try:
+            from codeindex.mcp_server import _resolve_symbol_index
+            sym_data = _resolve_symbol_index(None)
+            matches = sym_data.get("symbols", {}).get(name, [])
+        except FileNotFoundError:
+            pass
+    elif not matches and args.index:
+        from codeindex.mcp_server import _resolve_symbol_index
+        sym_data = _resolve_symbol_index(args.index)
+        matches = sym_data.get("symbols", {}).get(name, [])
+
     if not matches:
         print(f"Symbol `{name}` not found in index.", file=sys.stderr)
         sys.exit(1)

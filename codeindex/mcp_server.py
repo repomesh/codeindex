@@ -347,25 +347,49 @@ def _resolve_symbol_index(symbol_index_path: str | None) -> dict:
 
 
 def _call_lookup_symbol(params: dict) -> dict:
-    sym_data = _resolve_symbol_index(params.get("symbol_index_path"))
+    from codeindex.store import Store
+
     name = params["name"]
-    matches = sym_data.get("symbols", {}).get(name, [])
+    matches = []
+
+    # Prefer SQLite DB (same data source as semantic_search)
+    db_path = find_db(Path.cwd())
+    if db_path:
+        store = Store(db_path)
+        rows = store.lookup_by_name(name)
+        store.close()
+        matches = [
+            {
+                "file":     r["file"],
+                "line":     r["line"],
+                "kind":     r["kind"],
+                "exported": r["exported"],
+                "methods":  [],
+            }
+            for r in rows
+        ]
+
+    # Fall back to symbolindex.json when DB not available
+    if not matches:
+        try:
+            sym_data = _resolve_symbol_index(params.get("symbol_index_path"))
+            raw = sym_data.get("symbols", {}).get(name, [])
+            matches = [
+                {
+                    "file":     m["file"],
+                    "line":     m["line"],
+                    "kind":     m.get("kind", "?"),
+                    "exported": m.get("exported", True),
+                    "methods":  m.get("methods", []),
+                }
+                for m in raw
+            ]
+        except FileNotFoundError:
+            pass
+
     if not matches:
         return {"found": False, "name": name, "matches": []}
-    return {
-        "found": True,
-        "name": name,
-        "matches": [
-            {
-                "file":     m["file"],
-                "line":     m["line"],
-                "kind":     m.get("kind", "?"),
-                "exported": m.get("exported", True),
-                "methods":  m.get("methods", []),
-            }
-            for m in matches
-        ],
-    }
+    return {"found": True, "name": name, "matches": matches}
 
 
 def _call_build_symbol_index(params: dict) -> dict:

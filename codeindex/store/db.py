@@ -884,6 +884,31 @@ class Store:
             "blast_score": row["blast_score"],
         }
 
+    def lookup_by_name(self, name: str) -> list[dict]:
+        """Return all active symbols with the given name."""
+        rows = self._conn.execute(
+            """SELECT s.id, s.name, s.kind, s.line, s.exported, s.signature, s.doc,
+                      f.path AS file, f.blast_score
+               FROM symbols s
+               JOIN files f ON s.file_id = f.id
+               WHERE s.name = ? AND s.active = 1""",
+            (name,),
+        ).fetchall()
+        return [
+            {
+                "id":          r["id"],
+                "name":        r["name"],
+                "kind":        r["kind"],
+                "line":        r["line"],
+                "exported":    bool(r["exported"]),
+                "signature":   r["signature"],
+                "doc":         r["doc"],
+                "file":        r["file"],
+                "blast_score": r["blast_score"],
+            }
+            for r in rows
+        ]
+
     def symbols_needing_embeddings(self) -> list[tuple[int, str]]:
         """Return (symbol_id, text) pairs for active symbols without a vec_symbols entry.
 
