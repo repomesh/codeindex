@@ -2,6 +2,52 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.2] - 2026-06-07
+
+### Fixed
+
+- **TypeScript path alias resolution** — imports using `@/*`, `~/`, or any
+  alias defined in `tsconfig.json` / `jsconfig.json` `compilerOptions.paths`
+  were silently treated as external packages. All reverse-dependency counts,
+  blast scores, and `imported_by` lists were therefore zero for every real
+  source file in TypeScript repos. The JS analyzer now reads path aliases and
+  resolves them to actual file paths before falling back to the external-package
+  path.
+- **History backfill `first_seen_commit` overwrites** — `apply_file_temporal`
+  and `apply_edge_temporal` guarded updates with `WHERE first_seen_commit IS
+  NULL`. Because `analyze()` always writes the current HEAD commit as
+  `first_seen_commit` on insert, the NULL guard silently suppressed every
+  history update. Both methods now unconditionally overwrite with the
+  historically-derived value. `apply_edge_temporal` also drops the `kind=`
+  filter so `renders`/`styles`/`depends` edges are updated alongside `imports`
+  edges.
+- **`changed-since` modified files** — output now includes a `Modified files`
+  section (files with content changes but no structural add/remove) derived
+  from `git diff --name-status`. Added `git_modified()` to `index.py`.
+- **`changed-since` edge noise** — added/removed edges are now filtered to
+  only those where source or target is a touched file (modified, added, or
+  removed). Previously the entire accumulated graph diff was emitted.
+  Suppressed edge count is reported so nothing is silently hidden; `--json`
+  still returns the full set.
+- **Non-source nodes in outputs** — `high-blast` and `changed-since` now
+  exclude `service`, `pipeline`, `database`, and `import` node types (Docker
+  services, CI pipelines, npm packages) from all file and edge output.
+- **FTS prefix search for natural-language queries** — `fts_search` now builds
+  `word1* OR word2* OR ...` as the primary query so `auth login` also matches
+  `authenticate`, `loginAction`, etc. Special FTS5 syntax characters are
+  stripped before query construction to prevent `OperationalError`.
+- **Graph expansion noise in search ranking** — `graph_expand` is now skipped
+  when FTS (or semantic KNN) already returns ≥ k results, preventing
+  structurally adjacent but semantically unrelated symbols from diluting
+  high-quality keyword hits.
+- **Search file aggregation** — `codeindex search` and the `semantic_search`
+  MCP tool now include a `Files` section aggregating results by file (sorted
+  by symbol hit count). The entry-point file appears even when no single
+  symbol from it ranks at the top.
+- **`db status` FTS row count** — `codeindex db status` now shows
+  `fts_symbols` (rows in `symbols_fts`) making it easy to diagnose whether
+  the FTS index is populated.
+
 ## [0.3.1] - 2026-06-07
 
 ### Fixed
