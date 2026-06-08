@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.1] - 2026-06-07
+
+### Fixed
+
+- **Multi-word FTS search OR fallback** — `codeindex search "auth token"` previously
+  returned nothing when AND semantics found no single symbol containing all words.
+  `fts_search()` now retries with `word1 OR word2 OR ...` automatically when the
+  AND query returns zero results.
+- **`changed-since` backfill warning** — when `codeindex history` has never been run,
+  all files share exactly one `first_seen_commit`, making `changed-since` results
+  inaccurate against any older ref. The command now detects this via
+  `COUNT(DISTINCT first_seen_commit) <= 1` and prints a clear warning on stderr
+  (CLI) / includes a `"warning"` key in the response (JSON + MCP tool) directing
+  the user to run `codeindex history` first.
+
 ## [0.3.0] - 2026-06-07
 
 ### Summary
