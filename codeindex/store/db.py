@@ -14,7 +14,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-SCHEMA_VERSION = "2"
+SCHEMA_VERSION = "3"
 
 # sqlite-vec is an optional C extension; absence is a graceful degradation, not an error.
 try:
@@ -103,7 +103,8 @@ CREATE INDEX IF NOT EXISTS idx_files_active  ON files(active);
 # on all SQLite builds.
 _FTS_DDL = """
 CREATE VIRTUAL TABLE IF NOT EXISTS symbols_fts USING fts5(
-    name, doc, signature
+    name, doc, signature,
+    tokenize="porter unicode61"
 );
 """
 
@@ -148,8 +149,26 @@ class Store:
 
     def _migrate(self, from_version: str) -> None:
         """Apply forward migrations. vec_symbols is created on demand via init_vectors()."""
-        if from_version == "1":
+        v = from_version
+        if v == "1":
             self.set_meta("schema_version", "2")
+            v = "2"
+        if v == "2":
+            # Recreate symbols_fts with Porter stemmer so "authentication" matches "auth*".
+            try:
+                self._conn.executescript("DROP TABLE IF EXISTS symbols_fts;")
+                self._conn.executescript(
+                    "CREATE VIRTUAL TABLE IF NOT EXISTS symbols_fts USING fts5("
+                    "name, doc, signature, tokenize=\"porter unicode61\");"
+                )
+                self._conn.execute(
+                    "INSERT INTO symbols_fts(rowid, name, doc, signature)"
+                    " SELECT id, name, COALESCE(doc,''), COALESCE(signature,'')"
+                    " FROM symbols WHERE active=1"
+                )
+            except sqlite3.OperationalError:
+                pass  # FTS5 unavailable — degraded gracefully
+            self.set_meta("schema_version", "3")
         self._conn.commit()
 
     def _maybe_load_vec(self) -> None:
@@ -742,8 +761,8 @@ class Store:
             return []
         words = safe.split()
         try:
-            # Multi-word: prefix-OR across all terms so "auth login" also matches
-            # "authenticate", "loginAction", etc.  Single-word gets the same treatment.
+            # Primary: prefix-OR with Porter stemmer handles most word variants.
+            # "auth login" matches "authenticate", "loginAction", etc.
             prefix_or = " OR ".join(w + "*" for w in words)
             rows = self._conn.execute(
                 "SELECT rowid FROM symbols_fts WHERE symbols_fts MATCH ? "
@@ -752,7 +771,30 @@ class Store:
             ).fetchall()
             if rows:
                 return [r[0] for r in rows]
-            # Prefix-OR returned nothing — try exact phrase as last resort
+
+            # Progressive truncation: handles abbreviation-to-full-word gaps that
+            # stemming can't bridge, e.g. stored "auth" vs query "authentication".
+            # Try prefixes at 3/4, 1/2, and a hard 4-char floor so "authentication"
+            # reaches "auth*" and matches the short token "auth".
+            trunc_parts = []
+            for w in words:
+                if len(w) >= 8:
+                    trunc_parts.append(w[: max(4, len(w) * 3 // 4)] + "*")
+                if len(w) >= 6:
+                    trunc_parts.append(w[: max(4, len(w) // 2)] + "*")
+                if len(w) > 4:
+                    trunc_parts.append(w[:4] + "*")
+            if trunc_parts:
+                trunc_query = " OR ".join(dict.fromkeys(trunc_parts))  # deduplicate, preserve order
+                rows = self._conn.execute(
+                    "SELECT rowid FROM symbols_fts WHERE symbols_fts MATCH ? "
+                    "ORDER BY rank LIMIT ?",
+                    (trunc_query, k),
+                ).fetchall()
+                if rows:
+                    return [r[0] for r in rows]
+
+            # Last resort: exact phrase
             phrase = '"' + " ".join(words) + '"'
             rows = self._conn.execute(
                 "SELECT rowid FROM symbols_fts WHERE symbols_fts MATCH ? "

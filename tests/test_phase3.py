@@ -283,13 +283,13 @@ def test_get_symbol_metadata(tmp_path: Path) -> None:
 
 # ── Test 7: schema_version migrated to "2" ───────────────────────────────────
 
-def test_schema_version_is_2(tmp_path: Path) -> None:
-    """Opening a fresh store sets schema_version to 2."""
-    from codeindex.store import Store
+def test_schema_version_is_current(tmp_path: Path) -> None:
+    """Opening a fresh store sets schema_version to the current version."""
+    from codeindex.store import Store, SCHEMA_VERSION
 
     db_path = tmp_path / ".codeindex" / "index.db"
     store = Store(db_path)
     version = store.get_meta("schema_version")
     store.close()
 
-    assert version == "2", f"Expected schema_version '2', got '{version}'"
+    assert version == SCHEMA_VERSION, f"Expected schema_version '{SCHEMA_VERSION}', got '{version}'"

@@ -69,6 +69,37 @@ _JS_EXPORT_TYPE  = re.compile(
 _JS_EXPORT_ENUM  = re.compile(
     r"^export\s+(?:const\s+)?enum\s+(\w+)", re.MULTILINE
 )
+# export const { a, b, c } = expr()  — destructured assignment re-exports
+_JS_EXPORT_DESTRUCT = re.compile(
+    r"^export\s+(?:const|let|var)\s*\{([^}]+)\}", re.MULTILINE
+)
+# export { a, b as c } [from '...']  — named (re-)exports
+_JS_EXPORT_NAMED = re.compile(
+    r"^export\s*\{([^}]+)\}", re.MULTILINE
+)
+
+
+def _parse_destruct_names(capture: str) -> list[str]:
+    """Extract identifiers from a destructured export brace list.
+
+    Handles: { a, b, c as d }  →  [a, b, d]
+    Skips spread operators and anything that isn't a plain identifier.
+    """
+    names = []
+    for part in capture.split(","):
+        part = part.strip().lstrip(".")  # strip leading ... for spreads
+        if not part:
+            continue
+        # "local as exported" — the exported name is the alias
+        if " as " in part:
+            alias = part.split(" as ")[-1].strip()
+            if re.match(r"^\w+$", alias) and alias != "default":
+                names.append(alias)
+        else:
+            name = part.split()[0] if part.split() else ""
+            if name and re.match(r"^\w+$", name) and name != "default":
+                names.append(name)
+    return names
 
 
 def extract_js(path: Path) -> list[dict]:
@@ -95,6 +126,32 @@ def extract_js(path: Path) -> list[dict]:
                     "name": name,
                     "line": _line_of(source, m.start()),
                     "kind": kind,
+                    "exported": True,
+                })
+
+    # Destructured exports: export const { a, b } = SomeCall()
+    for m in _JS_EXPORT_DESTRUCT.finditer(source):
+        line = _line_of(source, m.start())
+        for name in _parse_destruct_names(m.group(1)):
+            if name not in seen:
+                seen.add(name)
+                symbols.append({
+                    "name": name,
+                    "line": line,
+                    "kind": "const",
+                    "exported": True,
+                })
+
+    # Named (re-)exports: export { foo, bar as baz } [from '...']
+    for m in _JS_EXPORT_NAMED.finditer(source):
+        line = _line_of(source, m.start())
+        for name in _parse_destruct_names(m.group(1)):
+            if name not in seen:
+                seen.add(name)
+                symbols.append({
+                    "name": name,
+                    "line": line,
+                    "kind": "const",
                     "exported": True,
                 })
 
