@@ -12,6 +12,19 @@ if TYPE_CHECKING:
 
 _RRF_K = 60  # standard RRF constant
 
+import re as _re
+
+
+def _query_stems(query: str) -> list[str]:
+    """Return lowercase 4-char stems of each word in the query."""
+    return [w[:4].lower() for w in _re.sub(r"[^\w\s]", " ", query).split() if len(w) >= 3]
+
+
+def _path_boost(file_path: str, stems: list[str]) -> float:
+    """1.5x if the file path contains any query stem; 1.0 otherwise."""
+    path_lower = file_path.lower()
+    return 1.5 if any(s in path_lower for s in stems) else 1.0
+
 
 def _rrf_fuse(ranked_lists: list[list[int]]) -> list[tuple[int, float]]:
     """Reciprocal Rank Fusion over lists of symbol IDs.
@@ -106,13 +119,20 @@ def hybrid_search(
             if store.symbol_visible_at(sid, as_of_reachable)
         ]
 
-    # 5. Hydrate top-k results
-    results: list[dict] = []
-    for sid, score in fused[:k]:
+    # 5. Hydrate and rerank: boost exported symbols and those whose file path
+    # contains query stems (auth.ts ranks above feedback/route.ts for "authentication").
+    stems = _query_stems(query)
+    hydrated: list[tuple[float, dict]] = []
+    for sid, score in fused[:k * 3]:  # oversample so rerank can promote better hits
         sym = store.get_symbol(sid)
-        if sym:
-            sym["rrf_score"] = round(score, 6)
-            sym["signals"] = provenance.get(sid, [])
-            results.append(sym)
+        if sym is None:
+            continue
+        boost = _path_boost(sym["file"], stems)
+        if sym.get("exported"):
+            boost *= 1.2
+        sym["rrf_score"] = round(score * boost, 6)
+        sym["signals"] = provenance.get(sid, [])
+        hydrated.append((sym["rrf_score"], sym))
 
-    return results
+    hydrated.sort(key=lambda x: x[0], reverse=True)
+    return [sym for _, sym in hydrated[:k]]

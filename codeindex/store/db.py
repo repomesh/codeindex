@@ -772,36 +772,25 @@ class Store:
             if rows:
                 return [r[0] for r in rows]
 
-            # Progressive truncation: handles abbreviation-to-full-word gaps that
-            # stemming can't bridge, e.g. stored "auth" vs query "authentication".
-            # Try prefixes at 3/4, 1/2, and a hard 4-char floor so "authentication"
-            # reaches "auth*" and matches the short token "auth".
+            # Truncation fallback: bridges abbreviation-to-full-word gaps that
+            # stemming can't handle, e.g. "authentication" → "auth*".
+            # Only runs when the primary pass found nothing.
             trunc_parts = []
             for w in words:
                 if len(w) >= 8:
                     trunc_parts.append(w[: max(4, len(w) * 3 // 4)] + "*")
-                if len(w) >= 6:
-                    trunc_parts.append(w[: max(4, len(w) // 2)] + "*")
                 if len(w) > 4:
                     trunc_parts.append(w[:4] + "*")
             if trunc_parts:
-                trunc_query = " OR ".join(dict.fromkeys(trunc_parts))  # deduplicate, preserve order
+                trunc_query = " OR ".join(dict.fromkeys(trunc_parts))
                 rows = self._conn.execute(
                     "SELECT rowid FROM symbols_fts WHERE symbols_fts MATCH ? "
                     "ORDER BY rank LIMIT ?",
                     (trunc_query, k),
                 ).fetchall()
-                if rows:
-                    return [r[0] for r in rows]
+                return [r[0] for r in rows]
 
-            # Last resort: exact phrase
-            phrase = '"' + " ".join(words) + '"'
-            rows = self._conn.execute(
-                "SELECT rowid FROM symbols_fts WHERE symbols_fts MATCH ? "
-                "ORDER BY rank LIMIT ?",
-                (phrase, k),
-            ).fetchall()
-            return [r[0] for r in rows]
+            return []
         except sqlite3.OperationalError:
             return []
 

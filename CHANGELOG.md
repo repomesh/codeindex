@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.5] - 2026-06-07
+
+### Fixed
+
+- **Search result ranking** — `hybrid_search` now applies a post-RRF boost (1.5×) to
+  symbols whose file path contains a query stem, and a secondary boost (1.2×) for
+  exported symbols. `auth.ts` now outranks `feedback/route.ts` when searching
+  "authentication", even if both contain auth-related symbols.
+- **FTS query reduction** — `fts_search` dropped from 3 SQLite round-trips to 2 max
+  (primary prefix-OR, then truncation fallback). Removed the exact-phrase last-resort
+  pass which added latency without meaningfully improving recall. Truncation logic
+  simplified to 3/4 and 4-char floor (removed 1/2 variant that added noise).
+
 ## [0.3.4] - 2026-06-07
 
 ### Fixed
