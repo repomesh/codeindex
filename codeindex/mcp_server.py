@@ -559,6 +559,7 @@ def _call_changed_since(params: dict) -> dict:
     result = store.changed_since(reachable)
     store.close()
     result["ref"] = ref
+    # warning key already present in result if backfill hasn't been run
     return result
 
 

@@ -415,6 +415,8 @@ def _cmd_changed_since(args: argparse.Namespace) -> None:
     if args.json:
         print(json.dumps(result, indent=2))
     else:
+        if result.get("warning"):
+            print(f"Warning: {result['warning']}", file=sys.stderr)
         af = result["added_files"]
         rf = result["removed_files"]
         ae = result["added_edges"]

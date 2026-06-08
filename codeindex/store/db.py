@@ -571,9 +571,29 @@ class Store:
         blast_map = compute_blast_radius(nodes, links)
         return blast_map.get(file_path)
 
+    def _backfill_warning(self) -> str | None:
+        """Return a warning string if git history hasn't been backfilled.
+
+        Heuristic: if all active files share exactly one distinct first_seen_commit,
+        temporal data comes from a single analyze run — history was never backfilled.
+        changed_since results against any ref older than that run will be inaccurate.
+        """
+        row = self._conn.execute(
+            "SELECT COUNT(DISTINCT first_seen_commit) FROM files WHERE active=1"
+        ).fetchone()
+        if row and row[0] <= 1:
+            return (
+                "Git history has not been backfilled — all files share the same "
+                "first_seen_commit. Run `codeindex history` first for accurate "
+                "changed_since results."
+            )
+        return None
+
     def changed_since(self, reachable: set) -> dict:
         """List files/edges added or removed since the historical point defined by reachable."""
         self._populate_reachable_temp(reachable)
+
+        warning = self._backfill_warning()
 
         added_files = [
             r[0] for r in self._conn.execute("""
@@ -619,12 +639,15 @@ class Store:
             """).fetchall()
         ]
 
-        return {
+        result: dict = {
             "added_files":   added_files,
             "removed_files": removed_files,
             "added_edges":   added_edges,
             "removed_edges": removed_edges,
         }
+        if warning:
+            result["warning"] = warning
+        return result
 
     # ── semantic / vector ─────────────────────────────────────────────────────
 
@@ -694,6 +717,8 @@ class Store:
         """Full-text search over symbols_fts. Returns symbol IDs ordered by relevance.
 
         The FTS rowid equals symbols.id (set explicitly in sync_symbols).
+        Multi-word queries use AND semantics first; if that returns nothing, retries
+        with OR so "auth token" finds symbols containing either word.
         Returns empty list if FTS is unavailable or the query is empty.
         """
         if not query.strip():
@@ -704,7 +729,19 @@ class Store:
                 "ORDER BY rank LIMIT ?",
                 (query, k),
             ).fetchall()
-            return [r[0] for r in rows]
+            if rows:
+                return [r[0] for r in rows]
+            # AND returned nothing — retry with OR for multi-word queries
+            words = query.strip().split()
+            if len(words) > 1:
+                or_query = " OR ".join(words)
+                rows = self._conn.execute(
+                    "SELECT rowid FROM symbols_fts WHERE symbols_fts MATCH ? "
+                    "ORDER BY rank LIMIT ?",
+                    (or_query, k),
+                ).fetchall()
+                return [r[0] for r in rows]
+            return []
         except sqlite3.OperationalError:
             return []
 
