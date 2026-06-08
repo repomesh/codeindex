@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.3] - 2026-06-07
+
+### Fixed
+
+- **`lookup` reads SQLite DB** — `codeindex lookup` and the `lookup_symbol` MCP tool
+  previously read `symbolindex.json`, which is only written by `codeindex symbols`.
+  Both now query `Store.lookup_by_name()` from the SQLite DB (the same source as
+  `codeindex search`), falling back to `symbolindex.json` only when no DB is present.
+  Symbols found via search — including those extracted from destructured re-exports —
+  are now consistently reachable via lookup.
+- **`lookup` output shows symbol name** — plain-mode output was `auth.ts:8 (const)`;
+  now `auth.ts:8 signIn (const)`, matching the format search results use.
+- **Porter stemmer FTS5 tokenizer** — `symbols_fts` is rebuilt with
+  `tokenize="porter unicode61"` (schema v3) so `authentication` matches `authenticate`
+  and vice versa. Schema migration drops and recreates the FTS table automatically.
+- **Progressive prefix truncation in `fts_search`** — fallback query tries 3/4, 1/2,
+  and 4-character floor prefix variants so short tokens like `auth` match longer
+  compound forms (`authenticate`, `authorization`). FTS5 special characters are
+  sanitized before query construction.
+- **Destructured re-export extraction** — `export const { signIn, signOut } = NextAuth(config)`
+  and `export { foo, bar as baz }` patterns are now extracted as individual named symbols.
+  Previously these produced no indexed symbols, making them invisible to search and lookup.
+- **`high-blast` shows LOC** — plain output and JSON/MCP response now include line count,
+  making thin wrappers (high blast score, low LOC) immediately distinguishable from
+  genuine API surfaces with broad real coupling.
+- **`changed-since` edge origin annotation** — added edges now carry `first_seen_commit`;
+  when N edges share the `last_indexed_commit` value, the CLI prints a count. The message
+  branches on whether `codeindex history` has been run:
+  - History not run: `"run codeindex history to date them accurately"`
+  - History run: `"bootstrap-gap artifacts: existed before the first codeindex analyze
+    and cannot be dated further"` — correctly reflects the inherent limitation rather
+    than implying a fixable error. MCP response gains `bootstrap_gap` boolean.
+
 ## [0.3.2] - 2026-06-07
 
 ### Fixed
